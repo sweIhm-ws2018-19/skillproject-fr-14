@@ -6,13 +6,13 @@ package UML_Uebungsblatt1;
 
 
 public class Geldbetrag {
-    private  int betrag;
+    private  double betrag;
 
-    public int getBetrag() {
+    public double getBetrag() {
         return betrag;
     }
 
-    public void setBetrag(int betrag) {
+    public void setBetrag(double betrag) {
         this.betrag = betrag;
     }
 }
