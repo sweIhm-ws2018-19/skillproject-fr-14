@@ -5,8 +5,9 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.LaunchRequest;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.request.Predicates;
+import main.java.tasche_packen.model.SubjectItemAssignment;
 
- import java.util.Optional;
+import java.util.Optional;
 
     public class LaunchRequestHandler implements RequestHandler {
 
@@ -17,7 +18,8 @@ import com.amazon.ask.request.Predicates;
 
         @Override
         public Optional<Response> handle(HandlerInput input) {
-            String speechText = "Welcome to the Alexa Skills Kit, you can say hello";
+            String speechText = "Willkommen beim Skill Tasche packen";
+            //TODO evtl an anderer Stelle erzeugen
             return input.getResponseBuilder()
                     .withSpeech(speechText)
                     .withSimpleCard("HelloWorld", speechText)
