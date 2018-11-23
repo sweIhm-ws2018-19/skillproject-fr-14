@@ -8,7 +8,7 @@ import com.amazon.ask.request.Predicates;
 import java.util.Optional;
 
 public class AidIntentHandler implements RequestHandler {
-    
+
 
     @Override
     public boolean canHandle(HandlerInput handlerInput) {
