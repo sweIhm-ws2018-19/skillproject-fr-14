@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public class AidIntentHandler implements RequestHandler {
 
-
     @Override
     public boolean canHandle(HandlerInput handlerInput) {
         return handlerInput.matches(Predicates.intentName("AidIntent"));
