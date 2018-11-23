@@ -1,4 +1,5 @@
 main\java\tasche_packen\handlers\CancelAndStopIntentHandler.class
+main\java\tasche_packen\handlers\TestIntentHandler.class
 main\java\tasche_packen\model\Item.class
 main\java\tasche_packen\model\Subject.class
 main\java\tasche_packen\handlers\LaunchRequestHandler.class
@@ -8,6 +9,6 @@ main\java\tasche_packen\handlers\SessionEndedRequestHandler.class
 main\java\tasche_packen\model\SubjectItemAssignment.class
 main\java\tasche_packen\handlers\HelloWorldIntentHandler.class
 main\java\tasche_packen\handlers\VisitAllSubjectsIntentHandler.class
-main\java\tasche_packen\handlers\MissSubjectsListIntentHandler.class
 main\java\tasche_packen\handlers\FallbackIntentHandler.class
 main\java\tasche_packen\handlers\HelpIntentHandler.class
+main\java\tasche_packen\handlers\MissedSubjectsListIntentHandler.class

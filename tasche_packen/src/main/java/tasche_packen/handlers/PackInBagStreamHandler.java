@@ -22,7 +22,8 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new WelcomeIntentHandler(subjectItemAssignment),
                         new VisitAllSubjectsIntentHandler(subjectItemAssignment),
                         new MissSubjectsIntentHandler(),
-                        new MissSubjectsListIntentHandler(subjectItemAssignment))
+                        new MissedSubjectsListIntentHandler(subjectItemAssignment),
+                new TestIntentHandler())
                 .build();
     }
 

@@ -13,7 +13,7 @@ public class SubjectItemAssignment {
 
     public SubjectItemAssignment() {
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        Subject operationsResearch = new Subject("Operations Research");
+        Subject operationsResearch = new Subject("operations research");
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
         subjectsVisited.add(algorithmsAndDatastructures);
         subjectsVisited.add(operationsResearch);
@@ -42,7 +42,7 @@ public class SubjectItemAssignment {
 
 
     public void deleteNotVisitedSubjects(String removeSubject) {
-        subjectsVisited = subjectsVisited.stream().filter(subject -> !subject.getName().equals(removeSubject)).collect(Collectors.toList());
+        subjectsVisited = subjectsVisited.stream().filter(subject -> (removeSubject != null ?  !subject.getName().equals(removeSubject): subject == subject)).collect(Collectors.toList());
     }
 
     public List<Subject> getSubjectsVisited() {
@@ -52,7 +52,7 @@ public class SubjectItemAssignment {
 
     public String getSubjectsVisitedAsString() {
         return     subjectsVisited.stream().map(s -> subjectsVisited.indexOf(s))
-                .map(i -> i == subjectsVisited.size() - 1 ? " and " + subjectsVisited.get(i).getName() : subjectsVisited.get(i).getName())
+                .map(i -> i == subjectsVisited.size() - 1 ? " und " + subjectsVisited.get(i).getName() : subjectsVisited.get(i).getName())
                 .reduce("", (o, n) -> o + " " + n);
 
     }
@@ -65,7 +65,7 @@ public class SubjectItemAssignment {
 
     public String getSubjectsTodayAsString() {
                    return     subjectsToday.stream().map(s -> subjectsToday.indexOf(s))
-                                .map(i -> i == subjectsToday.size() - 1 ? " and " + subjectsToday.get(i).getName() : subjectsToday.get(i).getName())
+                                .map(i -> i == subjectsToday.size() - 1 ? " und " + subjectsToday.get(i).getName() : subjectsToday.get(i).getName())
                                 .reduce("", (o, n) -> o + " " + n);
 
     }
