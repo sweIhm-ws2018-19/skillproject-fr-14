@@ -16,7 +16,8 @@ public class Calendar {
     private void requestZPA()
     {
         /* Reads the accountdata from the textfile */
-        try(BufferedReader accountDataReader = new BufferedReader(new FileReader("C:\\Users\\marti\\Desktop\\Studium\\3. Semester\\Software Engineering\\skillproject-fr-14\\tasche_packen\\src\\Accountdata.txt")))
+        final String filename = "C:\\Users\\marti\\Desktop\\Studium\\3. Semester\\Software Engineering\\skillproject-fr-14\\tasche_packen\\src\\Accountdata.txt";
+        try(BufferedReader accountDataReader = new BufferedReader(new FileReader(filename)))
         {
             String line;
             while((line = accountDataReader.readLine()) != null) {
