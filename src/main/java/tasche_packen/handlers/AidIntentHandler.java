@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public class AidIntentHandler implements RequestHandler {
 
+    private static boolean aidFinished;
+
     @Override
     public boolean canHandle(HandlerInput handlerInput) {
         return handlerInput.matches(Predicates.intentName("AidIntent"));
@@ -21,6 +23,7 @@ public class AidIntentHandler implements RequestHandler {
         final String function2 = "Außerdem kannst Du angeben welche Fächer Du heute nicht besuchen willst. Ich passe dann deine Liste darauf an";
         final String function3 = "Falls Du zu einem Fach jetzt andere Sachen mitnehmen willst kannst Du das nach Alexas erster Anfrage mit dem Befehl \"Gegenstand hinzufügen\" tun.";
         final String question = "Willst Du jetzt Deine Tasche packen?";
+        setAidFinished(true);
         return handlerInput.getResponseBuilder()
                 .withSpeech(appreciation)
                 .withSpeech(function1)
@@ -31,4 +34,13 @@ public class AidIntentHandler implements RequestHandler {
                 .withReprompt("Ich habe dich nicht verstanden." + question)
                 .build();
     }
+
+    public static boolean getAidFinished() {
+        return aidFinished;
+    }
+
+    public void setAidFinished(boolean finished) {
+        AidIntentHandler.aidFinished = finished;
+    }
+
 }
