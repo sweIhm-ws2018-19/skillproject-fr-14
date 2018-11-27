@@ -11,6 +11,7 @@ import java.util.Optional;
 public class VisitAllSubjectsIntentHandler implements RequestHandler {
     private final SubjectItemAssignment subjectItemAssignment;
     private String inputString;
+
     public VisitAllSubjectsIntentHandler(SubjectItemAssignment subjectItemAssignment) {
         this.subjectItemAssignment = subjectItemAssignment;
     }

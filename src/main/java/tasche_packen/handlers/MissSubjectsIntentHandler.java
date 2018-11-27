@@ -17,14 +17,12 @@ public class MissSubjectsIntentHandler implements RequestHandler {
          Request request = input.getRequestEnvelope().getRequest();
          IntentRequest intentRequest = (IntentRequest) request;
          Intent intent = intentRequest.getIntent();
-        Map<String, Slot> slots = intent.getSlots();
-        Slot inputSlot = slots.get("Answer");
-        inputString = inputSlot == null ? "kein Slot gefunden" : inputSlot.getValue();
-         return inputString.equals("nein") &&  input.matches(Predicates.intentName("MissSubjectsIntent"))
-                 || (input.matches(Predicates.intentName("MissSubjectsIntent")) && inputString != null  && inputString.equals("Ja")  && MissedSubjectsListIntentHandler.getMissSubjectsListIntentHandlerFinished())
+         Map<String, Slot> slots = intent.getSlots();
+         Slot inputSlot = slots.get("Answer");
+         inputString = inputSlot == null ? "kein Slot gefunden" : inputSlot.getValue();
+         return inputString.equals("nein") ||( inputString != null  && inputString.equals("Ja")  && MissedSubjectsListIntentHandler.getMissSubjectsListIntentHandlerFinished())
                  ;
-
-         //                 ;// WelcomeIntentHandler.getWelcomeFinished() && WelcomeIntentHandler.getWelcomeFinished() &&
+         //                 ;// WelcomeIntentHandler.getWelcomeFinished() && WelcomeIntentHandler.getWelcomeFinished() && &&  input.matches(Predicates.intentName("MissSubjectsIntent"))
     }
 
     @Override
