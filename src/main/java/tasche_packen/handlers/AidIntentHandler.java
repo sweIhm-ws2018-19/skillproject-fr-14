@@ -12,10 +12,6 @@ public class AidIntentHandler implements RequestHandler {
 
     private static boolean aidFinished;
 
-    public AidIntentHandler() {
-
-    }
-
     @Override
     public boolean canHandle(HandlerInput handlerInput) {
         return handlerInput.matches(Predicates.intentName("AidIntent"));
