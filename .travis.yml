@@ -1,0 +1,15 @@
+language: java
+jdk:
+ - oraclejdk8
+
+install:
+  - mvn -N io.takari:maven:wrapper
+  - ./mvnw install
+
+addons:
+   sonarcloud:
+       organization: "sweihmws2018-19"
+
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+  - mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
