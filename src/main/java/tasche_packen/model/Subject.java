@@ -16,10 +16,9 @@ public class Subject {
         requiredItems.add(item);
     }
 
-    public void removeItem(String item) {
+    public void removeItem(Item item) {
         requiredItems.remove(item);
     }
-
 
     public List<Item> getRequiredItems() {
         return requiredItems;

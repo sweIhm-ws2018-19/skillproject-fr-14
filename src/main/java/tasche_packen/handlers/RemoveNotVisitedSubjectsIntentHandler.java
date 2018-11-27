@@ -8,18 +8,19 @@ import main.java.tasche_packen.model.SubjectItemAssignment;
 import java.util.Map;
 import java.util.Optional;
 
-public class MissedSubjectsListIntentHandler implements RequestHandler {
-    private static boolean missSubjectsListIntentHandlerFinished = false;
+public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
+    private static boolean removeNotVisitedSubjectsIntentHandlerFinished = false;
     private  SubjectItemAssignment subjectItemAssignment;
+    private static final String INTENT_NAME = "RemoveNotVisitedSubjectIntent";
 
 
-    public MissedSubjectsListIntentHandler(SubjectItemAssignment subjectItemAssignment) {
+    public RemoveNotVisitedSubjectsIntentHandler(SubjectItemAssignment subjectItemAssignment) {
         this.subjectItemAssignment = subjectItemAssignment;
     }
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(Predicates.intentName("MissedSubjectsListIntent"));
+        return input.matches(Predicates.intentName(INTENT_NAME));
     }
 
     @Override
@@ -35,23 +36,24 @@ public class MissedSubjectsListIntentHandler implements RequestHandler {
             subjectToMiss = subjectSlot.getValue();
         }
         subjectItemAssignment.deleteNotVisitedSubjects(subjectToMiss);
-        MissSubjectsIntentHandler.setMissSubjectsIntentHandlerFinished(false);
-        missSubjectsListIntentHandlerFinished = true;
+
+        GetNotVisitedSubjectIntentHandler.setGetNotVisitedSubjectIntentHandlerFinished(false);
+        removeNotVisitedSubjectsIntentHandlerFinished = true;
         String missOneMoreSubject = "Willst du noch ein Fach nicht besuchen?";
 
 
         return input.getResponseBuilder()
-                .withSpeech(missOneMoreSubject +subjectItemAssignment.getTodayRequiredItemsAsString())
+                .withSpeech(missOneMoreSubject)
                 .withReprompt(missOneMoreSubject)
-                .withSimpleCard("HelloWorld", missOneMoreSubject)
+                .withSimpleCard(INTENT_NAME, missOneMoreSubject)
                 .build();
     }
 
-    public static boolean getMissSubjectsListIntentHandlerFinished() {
-        return missSubjectsListIntentHandlerFinished;
+    public static boolean getRemoveNotVisitedSubjectsIntentHandlerFinished() {
+        return removeNotVisitedSubjectsIntentHandlerFinished;
     }
 
-    public static void setMissSubjectsListIntentHandlerFinished(boolean missSubjectsListIntentHandlerFinished) {
-        missSubjectsListIntentHandlerFinished = missSubjectsListIntentHandlerFinished;
+    public static void setRemoveNotVisitedSubjectsIntentHandlerFinished(boolean removeNotVisitedSubjectsIntentHandlerFinished) {
+        removeNotVisitedSubjectsIntentHandlerFinished = removeNotVisitedSubjectsIntentHandlerFinished;
     }
 }

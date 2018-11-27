@@ -1,7 +1,7 @@
 package main.java.tasche_packen.model;
 
 public enum Item {
-    Notebook("Notebook"), PencilCase("Federmäppchen"), Pad("Block"), Calcuator("Taschenrechner");
+    Notebook("Notebook"), PencilCase("Federmäppchen"), Pad("Block"), Calculator("Taschenrechner");
 
     private final String name;
 

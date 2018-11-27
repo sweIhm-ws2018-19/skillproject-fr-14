@@ -7,23 +7,34 @@ import java.util.stream.Collectors;
 public class SubjectItemAssignment {
     //These values are for test purposes. Later the subjects  will be pulled from zpa and the assigned items will be fetched from database
 
-
     private List<Subject> subjectsVisited = new ArrayList<>();
     private final List<Subject> subjectsToday = new ArrayList<>();
+    public SubjectItemAssignment(Subject... subjects) {
 
+        for (int i = 0; i < subjects.length; i++) {
+            subjectsVisited.add(subjects[i]);
+            subjectsToday.add(subjects[i]);
+        }
+
+    }
+
+
+    //Test constructor
     public SubjectItemAssignment() {
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
         Subject operationsResearch = new Subject("operations research");
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
+
         subjectsVisited.add(algorithmsAndDatastructures);
         subjectsVisited.add(operationsResearch);
         subjectsVisited.add(statistics);
-        algorithmsAndDatastructures.addItem(Item.Pad);
-        operationsResearch.addItem(Item.Calcuator);
-        statistics.addItem(Item.PencilCase);
+
         subjectsToday.add(algorithmsAndDatastructures);
         subjectsToday.add(operationsResearch);
         subjectsToday.add(statistics);
+            algorithmsAndDatastructures.addItem(Item.Pad);
+            operationsResearch.addItem(Item.Calculator);
+            statistics.addItem(Item.PencilCase);
     }
 
 
@@ -36,7 +47,7 @@ public class SubjectItemAssignment {
     public String getTodayRequiredItemsAsString() {
         return getTodayRequiredItems().stream()
                 .map(item -> getTodayRequiredItems().indexOf(item))
-                .map(i -> i == getTodayRequiredItems().size() - 1 ? " und " + getTodayRequiredItems().get(i).getName() : getTodayRequiredItems().get(i).getName())
+                .map(i -> i == getTodayRequiredItems().size() - 1  && getTodayRequiredItems().size() > 1? "und " + getTodayRequiredItems().get(i).getName() : getTodayRequiredItems().get(i).getName())
                 .reduce("", (o, n) -> o + " " + n);
     }
 
@@ -52,9 +63,8 @@ public class SubjectItemAssignment {
 
     public String getSubjectsVisitedAsString() {
         return     subjectsVisited.stream().map(s -> subjectsVisited.indexOf(s))
-                .map(i -> i == subjectsVisited.size() - 1 ? " und " + subjectsVisited.get(i).getName() : subjectsVisited.get(i).getName())
+                .map(i -> i == subjectsVisited.size() - 1 && subjectsVisited.size() > 1 ? "und " + subjectsVisited.get(i).getName() : subjectsVisited.get(i).getName())
                 .reduce("", (o, n) -> o + " " + n);
-
     }
 
 
@@ -65,8 +75,8 @@ public class SubjectItemAssignment {
 
     public String getSubjectsTodayAsString() {
                    return     subjectsToday.stream().map(s -> subjectsToday.indexOf(s))
-                                .map(i -> i == subjectsToday.size() - 1 ? " und " + subjectsToday.get(i).getName() : subjectsToday.get(i).getName())
-                                .reduce("", (o, n) -> o + " " + n);
+                                .map(i -> i == subjectsToday.size() - 1 && subjectsVisited.size() > 1 ? "und " + subjectsToday.get(i).getName() : subjectsToday.get(i).getName())
+                                 .reduce("", (o, n) -> o + " " + n);
 
     }
 

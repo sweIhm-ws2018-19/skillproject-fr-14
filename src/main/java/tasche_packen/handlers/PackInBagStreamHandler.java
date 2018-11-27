@@ -20,10 +20,9 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new LaunchRequestHandler(),
                         new SessionEndedRequestHandler(),
                         new WelcomeIntentHandler(subjectItemAssignment),
-                        new VisitAllSubjectsIntentHandler(subjectItemAssignment),
-                        new MissSubjectsIntentHandler(),
-                        new MissedSubjectsListIntentHandler(subjectItemAssignment),
-                        new TestIntentHandler(),
+                        new GetRequiredItemsIntentHandler(subjectItemAssignment),
+                        new GetNotVisitedSubjectIntentHandler(),
+                        new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment),
                         new AidIntentHandler())
 
                 .build();

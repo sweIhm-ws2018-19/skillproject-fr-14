@@ -11,6 +11,8 @@ import java.util.Optional;
 public class WelcomeIntentHandler implements RequestHandler {
         private static boolean welcomeFinished = false;
         private final SubjectItemAssignment subjectItemAssignment;
+        private final static String INTENT_NAME = "WelcomeIntent";
+
 
     public WelcomeIntentHandler(SubjectItemAssignment subjectItemAssignment) {
         this.subjectItemAssignment = subjectItemAssignment;
@@ -18,24 +20,25 @@ public class WelcomeIntentHandler implements RequestHandler {
 
 
     @Override
-        public boolean canHandle(HandlerInput input) {
-            return input.matches(Predicates.intentName("WelcomeIntent"));
-        }
+    public boolean canHandle(HandlerInput input) {
 
-        @Override
-        public Optional<Response> handle(HandlerInput input) {
-            String subjectsToday = "Du hast heute " + subjectItemAssignment.getSubjectsTodayAsString();
-            String questionMissingSubjects = "Willst du heute alle Fächer besuchen";
-            welcomeFinished = true;
-            return input.getResponseBuilder()
-                    .withSpeech(subjectsToday + questionMissingSubjects)
-                    .withSimpleCard("HelloWorld", subjectsToday + questionMissingSubjects)
-                    .withReprompt("test")
-                    .build();
-        }
+        return input.matches(Predicates.intentName(INTENT_NAME));
+    }
 
+    @Override
+    public Optional<Response> handle(HandlerInput input) {
+        final String subjectsToday = "Du hast heute " + subjectItemAssignment.getSubjectsTodayAsString();
+        final String questionMissingSubjects = "Willst du heute alle Fächer besuchen";
+        final String output = subjectsToday + questionMissingSubjects;
+        welcomeFinished = true;
+        return input.getResponseBuilder()
+                .withSpeech(output)
+                .withSimpleCard(INTENT_NAME, output)
+                .withReprompt(output)
+                .build();
+    }
 
-        public static boolean getWelcomeFinished() {
+    public static boolean getWelcomeFinished() {
             return welcomeFinished;
         }
 
@@ -43,6 +46,7 @@ public class WelcomeIntentHandler implements RequestHandler {
         WelcomeIntentHandler.welcomeFinished = welcomeFinished;
     }
 }
+
 
 
 
