@@ -1,6 +1,7 @@
 # Intellij
 .idea/*
 *.iml
+workspace.xml
 
 # target
 target/*
@@ -18,7 +19,6 @@ target/*
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
