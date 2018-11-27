@@ -14,6 +14,7 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
 
         return Skills.standard()
                 .addRequestHandlers(
+                        new AidIntentHandler(),
                         new CancelAndStopIntentHandler(),
                         new HelloWorldIntentHandler(),
                         new HelpIntentHandler(),
@@ -22,8 +23,8 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new WelcomeIntentHandler(subjectItemAssignment),
                         new GetRequiredItemsIntentHandler(subjectItemAssignment),
                         new GetNotVisitedSubjectIntentHandler(),
-                        new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment),
-                        new AidIntentHandler())
+                        new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment)
+                        )
 
                 .build();
     }

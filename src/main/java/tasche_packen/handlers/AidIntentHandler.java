@@ -36,7 +36,7 @@ public class AidIntentHandler implements RequestHandler {
         return aidFinished;
     }
 
-    public void setAidFinished(boolean finished) {
+    public static void setAidFinished(boolean finished) {
         AidIntentHandler.aidFinished = finished;
     }
 
