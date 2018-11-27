@@ -5,6 +5,7 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.request.Predicates;
 
+//mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
 import java.util.Optional;
 
 public class AidIntentHandler implements RequestHandler {
@@ -17,19 +18,15 @@ public class AidIntentHandler implements RequestHandler {
     }
 
     @Override
-    public Optional<Response> handle(HandlerInput handlerInput) {
+    public Optional<Response> handle(HandlerInput input) {
         final String appreciation = "Danke für das Öffnen von Tasche packen.";
         final String function1 = "Du kannst Dir Deine Liste an mitzunehmenden Gegenständen für den heutigen Tag ausgeben lassen.";
-        final String function2 = "Außerdem kannst Du angeben welche Fächer Du heute nicht besuchen willst. Ich passe dann deine Liste darauf an";
+        final String function2 = "Außerdem kannst Du angeben welche Fächer Du heute nicht besuchen willst. Ich passe dann deine Liste darauf an.";
         final String function3 = "Falls Du zu einem Fach jetzt andere Sachen mitnehmen willst kannst Du das nach Alexas erster Anfrage mit dem Befehl \"Gegenstand hinzufügen\" tun.";
         final String question = "Willst Du jetzt Deine Tasche packen?";
         setAidFinished(true);
-        return handlerInput.getResponseBuilder()
-                .withSpeech(appreciation)
-                .withSpeech(function1)
-                .withSpeech(function2)
-                .withSpeech(function3)
-                .withSpeech(question)
+        return input.getResponseBuilder()
+                .withSpeech(appreciation + function1 + function2 + function3 + question)
                 .withSimpleCard("Hilfe", appreciation + function1 + function2 + function3 + question)
                 .withReprompt("Ich habe dich nicht verstanden." + question)
                 .build();
