@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>alexa-skills-kit-samples</groupId>
-    <artifactId>pack_bag</artifactId>
+    <artifactId>alexasescape</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-    <name>pack_bag</name>
+    <name>alexasescape</name>
     <url>http://developer.amazon.com/ask</url>
     <licenses>
         <license>
@@ -33,21 +33,15 @@
             <artifactId>ask-sdk</artifactId>
             <version>2.5.5</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.json/javax.json-api -->
-        <dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
-            <version>1.0</version>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>RELEASE</version>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <!--<sourceDirectory>src</sourceDirectory>!-->
         <pluginManagement>
             <plugins>
                 <plugin>
