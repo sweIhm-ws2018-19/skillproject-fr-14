@@ -1,8 +1,8 @@
 package java.tasche_packen.model;
 
 
-import main.java.tasche_packen.model.Item;
-import main.java.tasche_packen.model.Subject;
+import tasche_packen.model.Item;
+import tasche_packen.model.Subject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

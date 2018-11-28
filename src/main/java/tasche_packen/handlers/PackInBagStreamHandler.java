@@ -1,4 +1,4 @@
-package main.java.tasche_packen.handlers;
+package tasche_packen.handlers;
 
 import com.amazon.ask.Skill;
 import com.amazon.ask.Skills;
