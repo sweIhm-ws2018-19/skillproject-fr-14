@@ -10,13 +10,17 @@ import java.util.Map;
 
 public class Calendar {
 
+    /** Map that saves the login-data and necessary tokens to login into the ZPA-system. Out of security reasons
+     *  the contents of the Map will be (filled and) deleted automatically in the @method requestZPA */
     private final Map<String, String> loginData = new HashMap<>();
+
+    /** The list of lectures of the current day */
     private List<String> lectures = new ArrayList<>();
 
     private void requestZPA()
     {
-        /* Reads the accountdata from the textfile */
-        final String filename = "C:\\Users\\marti\\Desktop\\Studium\\3. Semester\\Software Engineering\\skillproject-fr-14\\tasche_packen\\src\\Accountdata.txt";
+        /* Reads the accountdata from the textfile Accountdata.txt */
+        final String filename = "src\\main\\java\\tasche_packen\\Accountdata.txt";
         try(BufferedReader accountDataReader = new BufferedReader(new FileReader(filename)))
         {
             String line;
@@ -26,7 +30,7 @@ public class Calendar {
                 loginData.put(loginVariable,valueOfVariable);
             }
 
-            put_CSFR_Token_to_Login_Data();
+            put_CSRF_Token_to_Login_Data();
 
             System.out.println("Die Login Daten, die in der Map stehen: ");
             System.out.println("username: " + loginData.get("username"));
@@ -72,16 +76,45 @@ public class Calendar {
         }
     }
 
+    /** Returns a list of the lectures that are demoed today */
     public List<String> getTodayLectures() {
-        requestZPA();
+        //requestZPA();
+        lectures = new ArrayList<>();
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+        switch(day) {
+            case java.util.Calendar.MONDAY:
+                lectures.add("Netzwerke");
+                lectures.add("Datenbanksysteme");
+                break;
+            case java.util.Calendar.TUESDAY:
+                lectures.add("Software Engineering");
+                lectures.add("Numerische Mathematik");
+                lectures.add("Datenbanksysteme");
+                break;
+            case java.util.Calendar.WEDNESDAY:
+                lectures.add("Numerische Mathematik");
+                break;
+            case java.util.Calendar.THURSDAY:
+                lectures.add("Algorithmen und Datenstrukturen");
+                lectures.add("Wahrscheinlichkeitstheorie und Statistik");
+                break;
+            case java.util.Calendar.FRIDAY:
+                lectures.add("Software Engineering");
+                lectures.add("Wahrscheinlichkeitstheorie und Statistik");
+                lectures.add("Algorithmen und Datenstrukturen");
+                break;
+        }
         return lectures;
     }
     public static void main (String... args) {
-        new Calendar().requestZPA();
+        System.out.println(new Calendar().getTodayLectures());
 
     }
 
-    private void put_CSFR_Token_to_Login_Data() throws MalformedURLException
+    /** A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
+     *  needed for the login. The token is saved in the Map logindata */
+    private void put_CSRF_Token_to_Login_Data() throws MalformedURLException
     {
         URL url = new URL("https://w3-o.cs.hm.edu:8000/login/ws_get_csrf_token/");
         final String tokenPattern = "(\"csrfmiddlewaretoken\": \")\\w*(\")";
@@ -99,14 +132,21 @@ public class Calendar {
         }
     }
 
+    /** With a HTTP-POST request we can login into the ZPA system. The needed parameters username, password and
+     *  csrfmiddlewaretoken will be read out of the Map logindata */
     private void zpa_login() throws IOException {
 
-        final String url = "https://w3-o.cs.hm.edu:8000/login/ws_login/?username=&password=&csrfmiddlewaretoken=" + loginData.get("csrfmiddlewaretoken");
+        final String url = "https://w3-o.cs.hm.edu:8000/login/ws_login/";
+        // ?username=&password=&csrfmiddlewaretoken=" + loginData.get("csrfmiddlewaretoken"
         URL obj = new URL(url);
         HttpURLConnection zpa_connection = (HttpURLConnection) obj.openConnection();
 
         zpa_connection.setRequestMethod("POST");
-        zpa_connection.setRequestProperty( "Accept", "application/json" );
+        zpa_connection.setRequestProperty("Accept", "application/x-www-from-urlencoded" );
+        zpa_connection.setRequestProperty("username", "" );
+        zpa_connection.setRequestProperty("password", "" );
+        zpa_connection.setRequestProperty("csrfmiddlewaretoken", loginData.get("csrfmiddlewaretoken") );
+        zpa_connection.setRequestProperty("Cookie", "csrftoken=" + loginData.get("csrfmiddlewaretoken"));
         zpa_connection.setDoOutput(true);
 
         JsonObject objectToBeSent = Json.createObjectBuilder()
