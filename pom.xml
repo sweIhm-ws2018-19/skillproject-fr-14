@@ -47,7 +47,7 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <!--<sourceDirectory>src</sourceDirectory>!-->
         <pluginManagement>
             <plugins>
                 <plugin>
