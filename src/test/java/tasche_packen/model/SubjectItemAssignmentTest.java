@@ -1,4 +1,4 @@
-package tasche_packen.models;
+package java.tasche_packen.model;
 
 
 import main.java.tasche_packen.model.Item;
