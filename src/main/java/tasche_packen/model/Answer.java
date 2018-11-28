@@ -1,4 +1,4 @@
-package java.tasche_packen.model;
+package main.java.tasche_packen.model;
 
 public  enum Answer {
     Yes("ja"), No("nein");
