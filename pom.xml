@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>alexa-skills-kit-samples</groupId>
-    <artifactId>alexasescape</artifactId>
+    <artifactId>pack_bag</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-    <name>alexasescape</name>
+    <name>pack_bag</name>
     <url>http://developer.amazon.com/ask</url>
     <licenses>
         <license>
