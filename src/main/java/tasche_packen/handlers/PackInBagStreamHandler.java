@@ -3,7 +3,7 @@ package tasche_packen.handlers;
 import com.amazon.ask.Skill;
 import com.amazon.ask.Skills;
 import com.amazon.ask.SkillStreamHandler;
-import main.java.tasche_packen.model.SubjectItemAssignment;
+import tasche_packen.model.SubjectItemAssignment;
 
 
 /**This class is the entry point for the skill**/

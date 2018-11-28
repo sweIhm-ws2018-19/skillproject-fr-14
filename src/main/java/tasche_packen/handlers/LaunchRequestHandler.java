@@ -5,7 +5,7 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.LaunchRequest;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.request.Predicates;
-import main.java.tasche_packen.model.SubjectItemAssignment;
+import tasche_packen.model.SubjectItemAssignment;
 
 import java.util.Optional;
 
