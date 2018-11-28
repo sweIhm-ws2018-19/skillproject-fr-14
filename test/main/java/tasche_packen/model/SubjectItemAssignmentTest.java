@@ -16,7 +16,7 @@ public class SubjectItemAssignmentTest {
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
         statistics.addItem(Item.Notebook);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
-        String  want = " Federmäppchen Taschenrechner und Notebook";
+        String  want = " Federmaeppchen Taschenrechner und Notebook";
         // act
         String have  = sut.getTodayRequiredItemsAsString();
         // assert
@@ -29,7 +29,7 @@ public class SubjectItemAssignmentTest {
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
         algorithmsAndDatastructures.addItem(Item.PencilCase);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures);
-        String  want = " Federmäppchen";
+        String  want = " Federmaeppchen";
         // act
         String have  = sut.getTodayRequiredItemsAsString();
         // assert
@@ -47,7 +47,7 @@ public class SubjectItemAssignmentTest {
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
         statistics.addItem(Item.Calculator);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
-        String  want = " Federmäppchen und Taschenrechner";
+        String  want = " Federmaeppchen und Taschenrechner";
         // act
         String have  = sut.getTodayRequiredItemsAsString();
         // assert
@@ -65,7 +65,7 @@ public class SubjectItemAssignmentTest {
         statistics.addItem(Item.Pad);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
         sut.deleteNotVisitedSubjects("Operations Research");
-        String  want = " Federmäppchen und Block";
+        String  want = " Federmaeppchen und Block";
         // act
         String have  = sut.getTodayRequiredItemsAsString();
         // assert

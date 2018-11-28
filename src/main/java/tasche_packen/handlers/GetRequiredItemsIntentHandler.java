@@ -31,8 +31,8 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         Map<String, Slot> slots = intent.getSlots();
         Slot inputSlot = slots.get(ANSWER_SLOT);
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-        return   (inputString != null && WelcomeIntentHandler.getWelcomeFinished() && inputString.equals("Ja"))
-                ||  (RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished() &&inputString.equals(Answer.No.getName()));
+        return   (inputString != null   && inputString.equals("Ja")  && WelcomeIntentHandler.getWelcomeFinished() )
+                || (RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished()  && inputString.equals(Answer.No.getName()));
     }
 
     @Override
