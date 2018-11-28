@@ -21,9 +21,9 @@ public class SubjectItemAssignment {
 
     //Test constructor
     public SubjectItemAssignment() {
-        Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
+        Subject algorithmsAndDatastructures = new Subject("algorithmen und datenstrukturen");
         Subject operationsResearch = new Subject("operations research");
-        Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
+        Subject statistics = new Subject("wahrscheinlichkeitsrechnung und statistik");
 
         subjectsVisited.add(algorithmsAndDatastructures);
         subjectsVisited.add(operationsResearch);

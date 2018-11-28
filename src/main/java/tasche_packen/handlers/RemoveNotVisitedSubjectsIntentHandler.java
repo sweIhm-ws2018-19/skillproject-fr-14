@@ -25,7 +25,7 @@ public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-         Request request = input.getRequestEnvelope().getRequest();
+        Request request = input.getRequestEnvelope().getRequest();
         IntentRequest intentRequest = (IntentRequest) request;
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
@@ -54,6 +54,6 @@ public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
     }
 
     public static void setRemoveNotVisitedSubjectsIntentHandlerFinished(boolean removeNotVisitedSubjectsIntentHandlerFinished) {
-        removeNotVisitedSubjectsIntentHandlerFinished = removeNotVisitedSubjectsIntentHandlerFinished;
+        RemoveNotVisitedSubjectsIntentHandler.removeNotVisitedSubjectsIntentHandlerFinished = removeNotVisitedSubjectsIntentHandlerFinished;
     }
 }

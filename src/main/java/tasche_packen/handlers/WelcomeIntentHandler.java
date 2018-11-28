@@ -37,18 +37,18 @@ public class WelcomeIntentHandler implements RequestHandler {
 
         }
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-        return input.matches(Predicates.intentName(INTENT_NAME))
-                || (inputString.equals("Ja") && AidIntentHandler.getAidFinished())
+        return input.matches(Predicates.intentName(INTENT_NAME)) || (inputString.equals("Ja") && AidIntentHandler.getAidFinished())
          ;
     }
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
         final String subjectsToday = "Du hast heute " + subjectItemAssignment.getSubjectsTodayAsString();
-        final String questionMissingSubjects = "Willst du heute alle Fächer besuchen";
+        final String questionMissingSubjects = " Willst du heute alle Faecher besuchen";
         final String output = subjectsToday + questionMissingSubjects;
         welcomeFinished = true;
         AidIntentHandler.setAidFinished(false);
+        RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);
 
         return input.getResponseBuilder()
                 .withSpeech(output)
