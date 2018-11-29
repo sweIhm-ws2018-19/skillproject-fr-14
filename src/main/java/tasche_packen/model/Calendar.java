@@ -69,10 +69,11 @@ public class Calendar {
         }
     }
 
+    /** requests the ZPA for the weekplan. After retrieving the weekplan the methoed fills the List */
     private void requestZPA()
     {
         /* Reads the accountdata from the textfile Accountdata.txt */
-        final String filename = "src\\main\\java\\tasche_packen\\Accountdata.txt";
+        final String filename = "Accountdata.txt";
         try(BufferedReader accountDataReader = new BufferedReader(new FileReader(filename)))
         {
             String line;
