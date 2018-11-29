@@ -1,4 +1,4 @@
-package main.java.tasche_packen;
+package tasche_packen.model;
 import javax.json.*;
 import java.io.*;
 import java.net.*;
