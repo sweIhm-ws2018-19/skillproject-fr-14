@@ -1,4 +1,4 @@
-package tasche_packen.model;
+package main.java.tasche_packen.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class SubjectItemAssignment {
     //These values are for test purposes. Later the subjects  will be pulled from zpa and the assigned items will be fetched from database
 
-    private List<Subject> subjectsVisited = new ArrayList<>();
+    private List<tasche_packen.model.Subject> subjectsVisited = new ArrayList<>();
     private final List<Subject> subjectsToday = new ArrayList<>();
     public SubjectItemAssignment(Subject... subjects) {
 
