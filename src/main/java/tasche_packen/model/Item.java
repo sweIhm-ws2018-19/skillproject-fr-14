@@ -1,4 +1,4 @@
-package main.java.tasche_packen.model;
+package tasche_packen.model;
 
 public enum Item {
     Notebook("Notebook"), PencilCase("Federmaeppchen"), Pad("Block"), Calculator("Taschenrechner");

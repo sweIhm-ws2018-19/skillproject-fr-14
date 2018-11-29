@@ -1,4 +1,4 @@
-package main.java.tasche_packen.handlers;
+package tasche_packen.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
@@ -19,10 +19,10 @@ public class AidIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        final String appreciation = "Danke für das Oeffnen von Tasche packen. ";
-        final String function1 = "Du kannst Dir Deine Liste an mitzunehmenden Gegenstaenden für den heutigen Tag ausgeben lassen. ";
-        final String function2 = "Außerdem kannst Du angeben welche Faecher Du heute nicht besuchen willst. Ich passe dann deine Liste darauf an. ";
-        final String function3 = "Falls Du zu einem Fach jetzt andere Sachen mitnehmen willst kannst Du das nach Alexas erster Anfrage mit dem Befehl \"Gegenstand hinzufügen\" tun. ";
+        final String appreciation = "Danke fuer das Oeffnen von Tasche packen. ";
+        final String function1 = "Du kannst Dir Deine Liste an mitzunehmenden Gegenstaenden fuer den heutigen Tag ausgeben lassen. ";
+        final String function2 = "Ausserdem kannst Du angeben welche Faecher Du heute nicht besuchen willst. Ich passe dann deine Liste darauf an. ";
+        final String function3 = "Falls Du zu einem Fach jetzt andere Sachen mitnehmen willst kannst Du das nach meiner erster Anfrage mit dem Befehl \"Gegenstand hinzufuegen\" tun. ";
         final String question = "Willst Du jetzt Deine Tasche packen? ";
         setAidFinished(true);
         return input.getResponseBuilder()

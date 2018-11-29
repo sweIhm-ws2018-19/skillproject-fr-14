@@ -1,9 +1,9 @@
-package main.java.tasche_packen.handlers;
+package tasche_packen.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
-import main.java.tasche_packen.model.Answer;
+import tasche_packen.model.Answer;
 
 import java.util.Map;
 import java.util.Optional;
