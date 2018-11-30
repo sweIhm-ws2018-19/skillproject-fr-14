@@ -1,5 +1,7 @@
-package main.java.tasche_packen.model;
+package tasche_packen.model;
 
+import tasche_packen.model.Item;
+import tasche_packen.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

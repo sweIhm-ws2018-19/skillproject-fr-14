@@ -6,7 +6,6 @@ import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
 import tasche_packen.model.Answer;
 import tasche_packen.model.SubjectItemAssignment;
-
 import java.util.Map;
 import java.util.Optional;
 

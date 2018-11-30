@@ -5,12 +5,13 @@ import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
 import tasche_packen.model.SubjectItemAssignment;
 
+
 import java.util.Map;
 import java.util.Optional;
 
 public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
     private static boolean removeNotVisitedSubjectsIntentHandlerFinished = false;
-    private  SubjectItemAssignment subjectItemAssignment;
+    private SubjectItemAssignment subjectItemAssignment;
     private static final String INTENT_NAME = "RemoveNotVisitedSubjectIntent";
 
 
