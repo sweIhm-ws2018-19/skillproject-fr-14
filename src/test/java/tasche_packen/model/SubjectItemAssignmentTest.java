@@ -1,9 +1,6 @@
 package tasche_packen.model;
 
 
-import tasche_packen.model.Item;
-import tasche_packen.model.Subject;
-import tasche_packen.model.SubjectItemAssignment;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,13 +10,13 @@ public class SubjectItemAssignmentTest {
     public void getTodayRequiredItemsAsString() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         Subject operationsResearch = new Subject("Operations Research");
-        operationsResearch.addItem(Item.Calculator);
+        operationsResearch.addItem(Item.CALCULATOR);
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
-        statistics.addItem(Item.Notebook);
+        statistics.addItem(Item.NOTEBOOK);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
-        String  want = " Federmaeppchen Taschenrechner und Notebook";
+        String  want = " Federmaeppchen Taschenrechner und NOTEBOOK";
         // act
         String have  = sut.getTodayRequiredItemsAsString();
         // assert
@@ -30,7 +27,7 @@ public class SubjectItemAssignmentTest {
     public void getTodayRequiredItemsOneItemAsString() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures);
         String  want = " Federmaeppchen";
         // act
@@ -44,11 +41,11 @@ public class SubjectItemAssignmentTest {
     public void getTodayRequiredItemsAsStringDoubleItem() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         Subject operationsResearch = new Subject("Operations Research");
-        operationsResearch.addItem(Item.Calculator);
+        operationsResearch.addItem(Item.CALCULATOR);
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
-        statistics.addItem(Item.Calculator);
+        statistics.addItem(Item.CALCULATOR);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
         String  want = " Federmaeppchen und Taschenrechner";
         // act
@@ -61,11 +58,11 @@ public class SubjectItemAssignmentTest {
     public void deleteNotVisitedSubjects() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         Subject operationsResearch = new Subject("Operations Research");
-        operationsResearch.addItem(Item.Calculator);
+        operationsResearch.addItem(Item.CALCULATOR);
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
-        statistics.addItem(Item.Pad);
+        statistics.addItem(Item.PAD);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
         sut.deleteNotVisitedSubjects("Operations Research");
         String  want = " Federmaeppchen und Block";
@@ -79,11 +76,11 @@ public class SubjectItemAssignmentTest {
     public void GetSubjectsVisitedAsString() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         Subject operationsResearch = new Subject("Operations Research");
-        operationsResearch.addItem(Item.Calculator);
+        operationsResearch.addItem(Item.CALCULATOR);
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
-        statistics.addItem(Item.Pad);
+        statistics.addItem(Item.PAD);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
         sut.deleteNotVisitedSubjects("Operations Research");
         String  want = " Algorithmen und Datenstrukturen und Wahrscheinlichkeitsrechnung und Statistik";
@@ -98,7 +95,7 @@ public class SubjectItemAssignmentTest {
     public void GetSubjectsVisitedOnlyOneSubjectAsString() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures);;
         String  want = " Algorithmen und Datenstrukturen";
         // act
@@ -111,11 +108,11 @@ public class SubjectItemAssignmentTest {
     public void GetSubjectsTodayAsString() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         Subject operationsResearch = new Subject("Operations Research");
-        operationsResearch.addItem(Item.Calculator);
+        operationsResearch.addItem(Item.CALCULATOR);
         Subject statistics = new Subject("Wahrscheinlichkeitsrechnung und Statistik");
-        statistics.addItem(Item.Pad);
+        statistics.addItem(Item.PAD);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures, operationsResearch, statistics);
         sut.deleteNotVisitedSubjects("Operations Research");
         String  want = " Algorithmen und Datenstrukturen Operations Research und Wahrscheinlichkeitsrechnung und Statistik";
@@ -130,7 +127,7 @@ public class SubjectItemAssignmentTest {
     public void GetSubjectsTodayOnlyOneSubjectAsString() {
         // arrange
         Subject algorithmsAndDatastructures = new Subject("Algorithmen und Datenstrukturen");
-        algorithmsAndDatastructures.addItem(Item.PencilCase);
+        algorithmsAndDatastructures.addItem(Item.PENCIL_CASE);
         SubjectItemAssignment sut = new SubjectItemAssignment(algorithmsAndDatastructures);
         sut.deleteNotVisitedSubjects("Algorithmen und Datenstrukturen");
         String  want = " Algorithmen und Datenstrukturen";

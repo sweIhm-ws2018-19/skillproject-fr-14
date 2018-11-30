@@ -1,16 +1,11 @@
 package tasche_packen.model;
 
 
-import tasche_packen.model.Item;
-import tasche_packen.model.Subject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class SubjectTest {
 
@@ -19,14 +14,14 @@ public class SubjectTest {
     public void removeItem() {
         // arrange
         Subject sut = new Subject("Operations Research");
-        sut.addItem(Item.Calculator);
-        sut.addItem(Item.Pad);
-        sut.addItem(Item.Notebook);
-        sut.removeItem(Item.Calculator);
+        sut.addItem(Item.CALCULATOR);
+        sut.addItem(Item.PAD);
+        sut.addItem(Item.NOTEBOOK);
+        sut.removeItem(Item.CALCULATOR);
         List<Item> want = new ArrayList<Item>();
 
-        want.add(Item.Pad);
-        want.add(Item.Notebook);
+        want.add(Item.PAD);
+        want.add(Item.NOTEBOOK);
         // act
         List<Item> have  = sut.getRequiredItems();
         // assert
@@ -38,12 +33,12 @@ public class SubjectTest {
     public void removeNotExistingItem() {
         // arrange
         Subject sut = new Subject("Operations Research");
-        sut.addItem(Item.Calculator);
-        sut.addItem(Item.Pad);
-        sut.removeItem(Item.PencilCase);
+        sut.addItem(Item.CALCULATOR);
+        sut.addItem(Item.PAD);
+        sut.removeItem(Item.PENCIL_CASE);
         List<Item> want = new ArrayList<Item>();
-        want.add(Item.Calculator);
-        want.add(Item.Pad);
+        want.add(Item.CALCULATOR);
+        want.add(Item.PAD);
 
         // act
         List<Item> have  = sut.getRequiredItems();

@@ -1,7 +1,4 @@
 package tasche_packen.model;
-
-import tasche_packen.model.Item;
-import tasche_packen.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,9 +31,9 @@ public class SubjectItemAssignment {
         subjectsToday.add(algorithmsAndDatastructures);
         subjectsToday.add(operationsResearch);
         subjectsToday.add(statistics);
-            algorithmsAndDatastructures.addItem(Item.Pad);
-            operationsResearch.addItem(Item.Calculator);
-            statistics.addItem(Item.PencilCase);
+            algorithmsAndDatastructures.addItem(Item.PAD);
+            operationsResearch.addItem(Item.CALCULATOR);
+            statistics.addItem(Item.PENCIL_CASE);
     }
 
 
