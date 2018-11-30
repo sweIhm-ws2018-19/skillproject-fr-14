@@ -55,7 +55,7 @@ public class SubjectItemAssignment {
 
 
     public void deleteNotVisitedSubjects(String removeSubject) {
-        subjectsVisited = subjectsVisited.stream().filter(subject -> (removeSubject == null ?  subject == subject : !subject.getName().equals(removeSubject))).collect(Collectors.toList());
+        subjectsVisited = subjectsVisited.stream().filter(subject ->  !subject.getName().equals(removeSubject)).collect(Collectors.toList());
     }
 
     public List<Subject> getSubjectsVisited() {
