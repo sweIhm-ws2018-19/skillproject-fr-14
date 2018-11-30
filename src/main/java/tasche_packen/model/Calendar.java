@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Calendar {
 
@@ -65,11 +67,12 @@ public class Calendar {
             loginData.put("csrfmiddlewaretoken", line.substring(25, line.length() - 2 ));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.SEVERE, "an IOException was thrown", e);
         }
     }
 
-    /** requests the ZPA for the weekplan. After retrieving the weekplan the methoed fills the List */
+    /** requests the ZPA for the weekplan. After retrieving the weekplan the method fills the List lectures */
     private void requestZPA()
     {
         /* Reads the accountdata from the textfile Accountdata.txt */
@@ -94,7 +97,7 @@ public class Calendar {
 
             /* The first 10 letters in LocalDateTime.now give us the current Date */
             final String currentDate = LocalDateTime.now().toString().substring(0,10);
-            lectures.removeAll(lectures);
+            lectures = new ArrayList<>();
 
             /* Requesting the schedule of this week */
             /*
@@ -122,7 +125,8 @@ public class Calendar {
 */
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.SEVERE, "an IOException was thrown", e);
         }
     }
 
