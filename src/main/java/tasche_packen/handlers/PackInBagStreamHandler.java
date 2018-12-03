@@ -27,7 +27,9 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
 
                         new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment))
 
-
+                .withTableName("packInBagData")
+                .withAutoCreateTable(true)
+                .withSkillId("id")
                   .build();
     }
 
