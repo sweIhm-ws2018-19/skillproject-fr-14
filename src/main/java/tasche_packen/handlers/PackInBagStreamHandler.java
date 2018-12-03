@@ -14,6 +14,7 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
 
         return Skills.standard()
                 .addRequestHandlers(
+                        new GoodbyeIntentHandler(),
                         new AidIntentHandler(),
                         new CancelAndStopIntentHandler(),
                         new HelloWorldIntentHandler(),

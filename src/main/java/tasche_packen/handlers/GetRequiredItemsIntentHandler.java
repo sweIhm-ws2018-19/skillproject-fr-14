@@ -17,6 +17,7 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
     private static final String NULL_VALUE = "NULL";
     private static final String YES = "ja";
     private static final String NO = "nein";
+    private static  boolean getRequiredItemsIntentHandlerFinished = false;
 
     public GetRequiredItemsIntentHandler(SubjectItemAssignment subjectItemAssignment) {
         this.subjectItemAssignment = subjectItemAssignment;
@@ -41,11 +42,21 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         final String requiredItems = subjectItemAssignment.getTodayRequiredItemsAsString();
         final String output = answer + requiredItems;
         RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);
+        setGetRequiredItemsIntentHandlerFinished(true);
         WelcomeIntentHandler.setWelcomeFinished(false);
         return input.getResponseBuilder()
                 .withSpeech(output)
                 .withReprompt(requiredItems)
                 .withSimpleCard(intentName, output)
                 .build();
+    }
+
+
+    public static boolean getGetRequiredItemsIntentHandlerFinished() {
+        return getRequiredItemsIntentHandlerFinished;
+    }
+
+    public static void setGetRequiredItemsIntentHandlerFinished(boolean getRequiredItemsIntentHandlerFinished) {
+        GetRequiredItemsIntentHandler.getRequiredItemsIntentHandlerFinished = getRequiredItemsIntentHandlerFinished;
     }
 }
