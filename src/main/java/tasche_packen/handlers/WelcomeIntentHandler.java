@@ -7,6 +7,7 @@ import com.amazon.ask.request.Predicates;
 import tasche_packen.model.Answer;
 import tasche_packen.model.Calendar;
 import tasche_packen.model.SubjectItemAssignment;
+import tasche_packen.model.SubjectsToday;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,6 @@ public class WelcomeIntentHandler implements RequestHandler {
     private static final String ANSWER_SLOT = "Answer";
     private static final String NULL_VALUE = "NULL";
     private String inputString;
-
 
 
     public WelcomeIntentHandler(SubjectItemAssignment subjectItemAssignment) {
@@ -46,8 +46,8 @@ public class WelcomeIntentHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
-        List<String> subjectsList = new Calendar().getTodayLectures();
-        String subjectsToday = subjectsList.stream()
+        //List<String> subjectsList = new Calendar().getTodayLectures();
+        String subjectsToday = tasche_packen.model.Utitlities.SUBJECTS_TODAY.getSubjectsToday().stream()
                 .distinct()
                 .map(str -> str.replaceAll(" I", ""))
                 .reduce((first,second) -> first + ", " + second)
@@ -57,7 +57,7 @@ public class WelcomeIntentHandler implements RequestHandler {
         if(subjectsToday.contains(","))
             subjectsToday = subjectsToday.substring(0, subjectsToday.lastIndexOf(',')) + " und " + subjectsToday.substring(subjectsToday.lastIndexOf(',') + 1);
         final String questionMissingSubjects = " Willst du heute alle Faecher besuchen ? ";
-        final String output = subjectsToday + " . " + questionMissingSubjects;
+        final String output = "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;
         welcomeFinished = true;
         AidIntentHandler.setAidFinished(false);
         RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);

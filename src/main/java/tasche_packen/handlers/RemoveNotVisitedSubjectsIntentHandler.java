@@ -4,6 +4,7 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
 import tasche_packen.model.SubjectItemAssignment;
+import tasche_packen.model.Utitlities;
 
 
 import java.util.Map;
@@ -36,7 +37,9 @@ public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
         if (subjectSlot != null) {
             subjectToMiss = subjectSlot.getValue();
         }
-        subjectItemAssignment.deleteNotVisitedSubjects(subjectToMiss);
+
+        //subjectItemAssignment.deleteNotVisitedSubjects(subjectToMiss);
+        Utitlities.SUBJECTS_TODAY.removeSubject(subjectToMiss);
 
         GetNotVisitedSubjectIntentHandler.setGetNotVisitedSubjectIntentHandlerFinished(false);
         removeNotVisitedSubjectsIntentHandlerFinished = true;

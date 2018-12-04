@@ -15,7 +15,7 @@ import java.util.*;
 
 public class LaunchRequestHandler implements RequestHandler {
 
-    private final static boolean RESET = true;
+    private final static boolean RESET = false;
 
         @Override
         public boolean canHandle(HandlerInput input) {
