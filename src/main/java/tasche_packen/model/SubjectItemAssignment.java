@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 public class SubjectItemAssignment {
     //These values are for test purposes. Later the subjects  will be pulled from zpa and the assigned items will be fetched from database
 
+
     private List<Subjects> subjectsVisited = new ArrayList<>();
     private final List<Subjects> subjectsToday = new ArrayList<>();
     public SubjectItemAssignment(Subjects... subjects) {
+
 
         for (int i = 0; i < subjects.length; i++) {
             subjectsVisited.add(subjects[i]);

@@ -15,8 +15,10 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
 
+
                         new LaunchRequestHandler(),
                         new AidIntentHandler(),
+                        new LaunchRequestHandler(),
                         new CancelAndStopIntentHandler(),
                         new HelloWorldIntentHandler(),
                         new HelpIntentHandler(),
@@ -25,11 +27,15 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new WelcomeIntentHandler(subjectItemAssignment),
                         new GetNotVisitedSubjectIntentHandler(),
                         new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment),
-                        new GetRequiredItemsIntentHandler(subjectItemAssignment))
+                        new GetRequiredItemsIntentHandler(subjectItemAssignment),
+                        new GoodbyeIntentHandler())
 
                 .withTableName("PackBagData")
                 .withAutoCreateTable(true)
                 .build();
+
+
+
     }
 
     public PackInBagStreamHandler() {
