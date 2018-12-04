@@ -8,6 +8,8 @@ import com.amazon.ask.request.Predicates;
 //mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
 import java.util.Optional;
 
+import static tasche_packen.handlers.WelcomeIntentHandler.setWelcomeFinished;
+
 public class AidIntentHandler implements RequestHandler {
 
     private static boolean aidFinished;

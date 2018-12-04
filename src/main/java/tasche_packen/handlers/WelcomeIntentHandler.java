@@ -46,14 +46,13 @@ public class WelcomeIntentHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
-        //List<String> subjectsList = new Calendar().getTodayLectures();
         String subjectsToday = tasche_packen.model.Utitlities.SUBJECTS_TODAY.getSubjectsToday().stream()
                 .distinct()
                 .map(str -> str.replaceAll(" I", ""))
                 .reduce((first,second) -> first + ", " + second)
                 .orElse("nichts");
 
-        //subjectsToday.substring(0,subjectsToday.length() - 2);
+
         if(subjectsToday.contains(","))
             subjectsToday = subjectsToday.substring(0, subjectsToday.lastIndexOf(',')) + " und " + subjectsToday.substring(subjectsToday.lastIndexOf(',') + 1);
         final String questionMissingSubjects = " Willst du heute alle Faecher besuchen ? ";

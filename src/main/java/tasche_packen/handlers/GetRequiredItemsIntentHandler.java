@@ -62,10 +62,8 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         if(requiredItems.contains(","))
             requiredItems = requiredItems.substring(0, requiredItems.lastIndexOf(',')) + " und "
                     + requiredItems.substring(requiredItems.lastIndexOf(',') + 1);
-        //String favoriteColor = (String) persistentAttributes.get(PhrasesAndConstants.COLOR_KEY);
 
 
-        //final String requiredItems = subjectItemAssignment.getTodayRequiredItemsAsString();
         final String output = answer + requiredItems;
         RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);
         setGetRequiredItemsIntentHandlerFinished(true);
