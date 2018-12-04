@@ -27,25 +27,25 @@ public class Calendar {
         int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
         switch(day) {
             case java.util.Calendar.MONDAY:
-                lectures.add("Netzwerke");
-                lectures.add("Datenbanksysteme");
+                lectures.add("Netzwerke I");
+                lectures.add("Datenbanksysteme I");
                 break;
             case java.util.Calendar.TUESDAY:
-                lectures.add("Software Engineering");
+                lectures.add("Software Engineering I");
                 lectures.add("Numerische Mathematik");
-                lectures.add("Datenbanksysteme");
+                lectures.add("Datenbanksysteme I");
                 break;
             case java.util.Calendar.WEDNESDAY:
                 lectures.add("Numerische Mathematik");
                 break;
             case java.util.Calendar.THURSDAY:
-                lectures.add("Algorithmen und Datenstrukturen");
+                lectures.add("Algorithmen und Datenstrukturen I");
                 lectures.add("Wahrscheinlichkeitstheorie und Statistik");
                 break;
             case java.util.Calendar.FRIDAY:
-                lectures.add("Software Engineering");
+                lectures.add("Software Engineering I");
                 lectures.add("Wahrscheinlichkeitstheorie und Statistik");
-                lectures.add("Algorithmen und Datenstrukturen");
+                lectures.add("Algorithmen und Datenstrukturen I");
                 break;
         }
         return lectures;

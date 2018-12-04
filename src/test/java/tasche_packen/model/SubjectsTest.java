@@ -4,26 +4,26 @@ package tasche_packen.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class SubjectTest {
+public class SubjectsTest {
 
 
     @Test(timeout = 1_000)
     public void removeItem() {
         // arrange
-        Subject sut = new Subject("Operations Research");
+        Subjects sut = new Subjects("Operations Research");
         sut.addItem(Item.CALCULATOR);
         sut.addItem(Item.PAD);
         sut.addItem(Item.NOTEBOOK);
         sut.removeItem(Item.CALCULATOR);
-        List<Item> want = new ArrayList<Item>();
+        Set<Item> want = new HashSet<Item>();
 
         want.add(Item.PAD);
         want.add(Item.NOTEBOOK);
         // act
-        List<Item> have  = sut.getRequiredItems();
+        Set<Item> have  = sut.getRequiredItems();
         // assert
         Assert.assertEquals(want, have);
     }
@@ -32,16 +32,16 @@ public class SubjectTest {
     @Test(timeout = 1_000)
     public void removeNotExistingItem() {
         // arrange
-        Subject sut = new Subject("Operations Research");
+        Subjects sut = new Subjects("Operations Research");
         sut.addItem(Item.CALCULATOR);
         sut.addItem(Item.PAD);
         sut.removeItem(Item.PENCIL_CASE);
-        List<Item> want = new ArrayList<Item>();
+        Set<Item> want = new HashSet<Item>();
         want.add(Item.CALCULATOR);
         want.add(Item.PAD);
 
         // act
-        List<Item> have  = sut.getRequiredItems();
+        Set<Item> have  = sut.getRequiredItems();
         // assert
         Assert.assertEquals(want, have);
     }

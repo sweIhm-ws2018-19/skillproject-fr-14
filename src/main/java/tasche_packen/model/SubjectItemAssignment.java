@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 public class SubjectItemAssignment {
     //These values are for test purposes. Later the subjects  will be pulled from zpa and the assigned items will be fetched from database
 
-    private List<tasche_packen.model.Subject> subjectsVisited = new ArrayList<>();
-    private final List<Subject> subjectsToday = new ArrayList<>();
-    public SubjectItemAssignment(Subject... subjects) {
+    private List<Subjects> subjectsVisited = new ArrayList<>();
+    private final List<Subjects> subjectsToday = new ArrayList<>();
+    public SubjectItemAssignment(Subjects... subjects) {
 
         for (int i = 0; i < subjects.length; i++) {
             subjectsVisited.add(subjects[i]);
@@ -20,9 +20,10 @@ public class SubjectItemAssignment {
 
     //Test constructor
     public SubjectItemAssignment() {
-        Subject algorithmsAndDatastructures = new Subject("algorithmen und datenstrukturen");
-        Subject operationsResearch = new Subject("operations research");
-        Subject statistics = new Subject("wahrscheinlichkeitsrechnung und statistik");
+
+        Subjects algorithmsAndDatastructures = new Subjects("algorithmen und datenstrukturen");
+        Subjects operationsResearch = new Subjects("operations research");
+        Subjects statistics = new Subjects("wahrscheinlichkeitsrechnung und statistik");
 
         subjectsVisited.add(algorithmsAndDatastructures);
         subjectsVisited.add(operationsResearch);
@@ -55,7 +56,7 @@ public class SubjectItemAssignment {
         subjectsVisited = subjectsVisited.stream().filter(subject ->  !subject.getName().equals(removeSubject)).collect(Collectors.toList());
     }
 
-    public List<Subject> getSubjectsVisited() {
+    public List<Subjects> getSubjectsVisited() {
         return subjectsVisited;
     }
 
@@ -67,7 +68,7 @@ public class SubjectItemAssignment {
     }
 
 
-    public List<Subject> getSubjectsToday() {
+    public List<Subjects> getSubjectsToday() {
         return subjectsToday;
     }
 

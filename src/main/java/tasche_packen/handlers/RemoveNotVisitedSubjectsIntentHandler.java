@@ -31,7 +31,7 @@ public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
 
-        Slot subjectSlot = slots.get("Subject");
+        Slot subjectSlot = slots.get("Subjects");
         String subjectToMiss = "kein fach gefunden";
         if (subjectSlot != null) {
             subjectToMiss = subjectSlot.getValue();
