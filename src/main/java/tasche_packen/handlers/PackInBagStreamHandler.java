@@ -14,23 +14,23 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
 
         return Skills.standard()
                 .addRequestHandlers(
-                        new GoodbyeIntentHandler(),
-                        new AidIntentHandler(),
+                        new LaunchRequestHandler(),
                         new CancelAndStopIntentHandler(),
                         new HelloWorldIntentHandler(),
                         new HelpIntentHandler(),
-                        new LaunchRequestHandler(),
                         new SessionEndedRequestHandler(),
                         new AidIntentHandler(),
                         new WelcomeIntentHandler(subjectItemAssignment),
                         new GetRequiredItemsIntentHandler(subjectItemAssignment),
                         new GetNotVisitedSubjectIntentHandler(),
+                        new AidIntentHandler(),
+                        new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment),
+                        new GoodbyeIntentHandler()
+                        )
 
-                        new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment))
-
-                .withTableName("packInBagData")
+      .withTableName("packInBagData")
                 .withAutoCreateTable(true)
-                .withSkillId("id")
+             //   .withSkillId("id")
                   .build();
     }
 
