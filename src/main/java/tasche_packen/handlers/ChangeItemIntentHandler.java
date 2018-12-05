@@ -20,26 +20,27 @@ import static tasche_packen.handlers.WelcomeIntentHandler.setWelcomeFinished;
 public class ChangeItemIntentHandler implements RequestHandler {
     private String subject;
     private String item;
-    private static String ANSWER_SLOT = "Answer";
+    //private static String ANSWER_SLOT = "Answer";
     private static String SUBJECT_SLOT = "Subject";
     private static String ITEM_SLOT = "Item";
     private static final String NULL_VALUE ="NULL";
     private static final String INTENT_NAME= "ChangeItemIntent";
-    private static boolean changeItemFinished;
+    private static boolean changeItemFinished = false;
     private Slot subjectSlot;
     private Slot itemSlot;
 
     @Override
     public boolean canHandle(HandlerInput input) {
+        if(!getChangedItemFinished() && !getGetChangedItemFinished()) return false;
         Request request = input.getRequestEnvelope().getRequest();
         IntentRequest intentRequest = (IntentRequest) request;
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
-        Slot answerSlot = slots.get(ANSWER_SLOT);
+        //Slot answerSlot = slots.get(ANSWER_SLOT);
         subjectSlot = slots.get(SUBJECT_SLOT);
         itemSlot = slots.get(ITEM_SLOT);
-        String answer = answerSlot == null ? NULL_VALUE : answerSlot.getValue();
-        if(getChangedItemFinished() && !getGetChangedItemFinished() && Answer.Yes.getName().equals(answer)) return true;
+        //String answer = answerSlot == null ? NULL_VALUE : answerSlot.getValue();
+        //if(getChangedItemFinished() && !getGetChangedItemFinished() && Answer.Yes.getName().equals(answer)) return true;
         return getGetChangedItemFinished();
     }
 

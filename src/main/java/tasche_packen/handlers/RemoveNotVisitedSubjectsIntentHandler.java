@@ -10,6 +10,9 @@ import tasche_packen.model.Utitlities;
 import java.util.Map;
 import java.util.Optional;
 
+import static tasche_packen.handlers.ChangeItemIntentHandler.getChangedItemFinished;
+import static tasche_packen.handlers.GetChangedItemIntentHandler.getGetChangedItemFinished;
+
 public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
     private static boolean removeNotVisitedSubjectsIntentHandlerFinished = false;
     private SubjectItemAssignment subjectItemAssignment;
@@ -22,6 +25,7 @@ public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
+        if(getChangedItemFinished() || getGetChangedItemFinished()) return false;
         return input.matches(Predicates.intentName(INTENT_NAME));
     }
 

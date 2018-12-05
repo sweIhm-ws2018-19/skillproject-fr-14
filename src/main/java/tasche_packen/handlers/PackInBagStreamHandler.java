@@ -31,7 +31,7 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new GetRequiredItemsIntentHandler(subjectItemAssignment),
                         new GoodbyeIntentHandler())
 
-                .withTableName("PackBagData")
+                .withTableName("DataPackBag")
                 .withAutoCreateTable(true)
                 .build();
 

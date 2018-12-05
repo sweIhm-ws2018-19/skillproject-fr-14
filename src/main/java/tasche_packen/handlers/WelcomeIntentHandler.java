@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static tasche_packen.handlers.ChangeItemIntentHandler.getChangedItemFinished;
+import static tasche_packen.handlers.ChangeItemIntentHandler.setChangedItemFinished;
+import static tasche_packen.handlers.GetChangedItemIntentHandler.getGetChangedItemFinished;
+import static tasche_packen.handlers.GetChangedItemIntentHandler.setGetChangedItemFinished;
+
 public class WelcomeIntentHandler implements RequestHandler {
     private static boolean welcomeFinished = false;
     private final SubjectItemAssignment subjectItemAssignment;
@@ -39,8 +44,9 @@ public class WelcomeIntentHandler implements RequestHandler {
 
         }
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-        return input.matches(Predicates.intentName(INTENT_NAME)) || (inputString.equals("Ja") && AidIntentHandler.getAidFinished())
-                ;
+        return input.matches(Predicates.intentName(INTENT_NAME))
+                || (inputString.equals("Ja") && AidIntentHandler.getAidFinished() && !getChangedItemFinished()
+                || (getChangedItemFinished() && Answer.No.getName().equals(inputString)));
     }
 
     @Override
@@ -59,6 +65,8 @@ public class WelcomeIntentHandler implements RequestHandler {
         final String output = "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;
         welcomeFinished = true;
         AidIntentHandler.setAidFinished(false);
+        setGetChangedItemFinished(false);
+        setChangedItemFinished(false);
         RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);
 
         return input.getResponseBuilder()

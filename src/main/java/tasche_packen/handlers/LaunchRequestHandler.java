@@ -15,7 +15,7 @@ import java.util.*;
 
 public class LaunchRequestHandler implements RequestHandler {
 
-    private final static boolean RESET = false;
+    private final static boolean RESET = true;
 
         @Override
         public boolean canHandle(HandlerInput input) {
@@ -41,7 +41,7 @@ public class LaunchRequestHandler implements RequestHandler {
             final Subject netzwerkeVL = new Subject("Netzwerke I").addItem("Federmaeppchen");
             final Subject datenbankenVL = new Subject("Datenbanksysteme I").addItem("Federmaeppchen", "Kaffee");
             final Subject sweIVL = new Subject("Software Engineering I").addItem("Notebook", "Kaffee");
-            final Subject numerischeVL = new Subject("Numerische Mathematik").addItem("Federmaeppchen");
+            final Subject numerischeVL = new Subject("Numerische Mathematik").addItem("Federmaeppchen", "Block");
             final Subject difDGLVL = new Subject("Differentialrechnung in Rn und Differentialgleichungen").addItem("Block");
             final Subject algodatVL = new Subject("Algorithmen und Datenstrukturen I").addItem("Federmaeppchen");
             final Subject statistikVL = new Subject("Wahrscheinlichkeitsrechnung und Statistik").addItem("Block");

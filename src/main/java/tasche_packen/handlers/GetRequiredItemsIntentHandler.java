@@ -54,7 +54,7 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         HashSet<String> items = new HashSet<>();
         for(int i = 0; i < subjects.size(); i++) {
             HashSet<String> subjectItem = (HashSet<String>) persistentAttributes.get(subjects.get(i));
-            items.addAll(subjectItem);
+            if(subjectItem != null) items.addAll(subjectItem);
         }
         String requiredItems = items.stream()
                 .reduce((first,second) -> first + "," + second)

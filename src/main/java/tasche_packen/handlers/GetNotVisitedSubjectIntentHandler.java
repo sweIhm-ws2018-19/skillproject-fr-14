@@ -7,6 +7,9 @@ import tasche_packen.model.Answer;
 import java.util.Map;
 import java.util.Optional;
 
+import static tasche_packen.handlers.ChangeItemIntentHandler.getChangedItemFinished;
+import static tasche_packen.handlers.GetChangedItemIntentHandler.getGetChangedItemFinished;
+
 public class GetNotVisitedSubjectIntentHandler implements RequestHandler {
     private static boolean getNotVisitedSubjectIntentHandlerFinished = false;
     private String inputString;
@@ -23,7 +26,7 @@ public class GetNotVisitedSubjectIntentHandler implements RequestHandler {
          Map<String, Slot> slots = intent.getSlots();
          Slot inputSlot = slots.get(ANSWER_SLOT);
          inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-         return (inputString.equals(Answer.No.getName()) &&   WelcomeIntentHandler.getWelcomeFinished()  )||( inputString != null  && inputString.equals("Ja")&& RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished());
+         return (inputString.equals(Answer.No.getName()) &&   WelcomeIntentHandler.getWelcomeFinished()  )||( inputString != null  && inputString.equals("Ja")&& RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished() && !getChangedItemFinished());
     }
 
 
