@@ -3,8 +3,7 @@ package tasche_packen.handlers;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
-import com.amazon.ask.model.LaunchRequest;
-import com.amazon.ask.model.Response;
+import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
 import tasche_packen.model.Item;
 import tasche_packen.model.Subject;
@@ -15,7 +14,7 @@ import java.util.*;
 
 public class LaunchRequestHandler implements RequestHandler {
 
-    private final static boolean RESET = true;
+    private final static boolean RESET = false;
 
         @Override
         public boolean canHandle(HandlerInput input) {
@@ -59,6 +58,13 @@ public class LaunchRequestHandler implements RequestHandler {
             attributesManager.setPersistentAttributes(persistentAttributes);
             attributesManager.savePersistentAttributes();
         }
+
+
+
+
+
+
+
 
     }
 
