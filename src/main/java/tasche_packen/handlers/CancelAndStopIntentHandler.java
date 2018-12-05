@@ -16,9 +16,10 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 
      @Override
      public Optional<Response> handle(HandlerInput input) {
+         final String output = "Schade, dass du den Skill verlassen willst. Hoffentlich bis bald.";
          return input.getResponseBuilder()
-                 .withSpeech("Goodbye")
-                 .withSimpleCard("HelloWorld", "Goodbye")
+                 .withSpeech(output)
+                 .withSimpleCard("HelloWorld", output)
                  .build();
      }
  }
