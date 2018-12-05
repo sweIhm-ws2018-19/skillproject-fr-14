@@ -36,18 +36,17 @@ public class WelcomeIntentHandler implements RequestHandler {
         Slot inputSlot = null;
         if (slots != null) {
             inputSlot = slots.get(ANSWER_SLOT);
-
         }
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-        return input.matches(Predicates.intentName(INTENT_NAME)) || (inputString.equals("Ja") && AidIntentHandler.getAidFinished())
-                ;
+        return input.matches(Predicates.intentName(INTENT_NAME)) || (inputString.equals("Ja") && AidIntentHandler.getAidFinished());
     }
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
-        String subjectsToday = tasche_packen.model.Utitlities.SUBJECTS_TODAY.getSubjectsToday().stream()
+      String subjectsToday = tasche_packen.model.Utitlities.SUBJECTS_TODAY.getSubjectsToday().stream()
                 .distinct()
+                .filter(str -> str != null)
                 .map(str -> str.replaceAll(" I", ""))
                 .reduce((first,second) -> first + ", " + second)
                 .orElse("nichts");
@@ -56,7 +55,8 @@ public class WelcomeIntentHandler implements RequestHandler {
         if(subjectsToday.contains(","))
             subjectsToday = subjectsToday.substring(0, subjectsToday.lastIndexOf(',')) + " und " + subjectsToday.substring(subjectsToday.lastIndexOf(',') + 1);
         final String questionMissingSubjects = " Willst du heute alle Faecher besuchen ? ";
-        final String output = "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;
+       final String output = "test";     //= "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;*/
+
         welcomeFinished = true;
         AidIntentHandler.setAidFinished(false);
         RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);
