@@ -61,7 +61,9 @@ public class WelcomeIntentHandler implements RequestHandler {
         if(subjectsToday.contains(","))
             subjectsToday = subjectsToday.substring(0, subjectsToday.lastIndexOf(',')) + " und " + subjectsToday.substring(subjectsToday.lastIndexOf(',') + 1);
         final String questionMissingSubjects = " Willst du heute alle Faecher besuchen ? ";
+
         final String output = "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;
+
 
         welcomeFinished = true;
         AidIntentHandler.setAidFinished(false);
