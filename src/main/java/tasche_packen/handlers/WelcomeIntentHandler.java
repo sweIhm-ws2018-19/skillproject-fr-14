@@ -5,18 +5,13 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
 import tasche_packen.model.Answer;
-import tasche_packen.model.Calendar;
 import tasche_packen.model.SubjectItemAssignment;
-import tasche_packen.model.SubjectsToday;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static tasche_packen.handlers.ChangeItemIntentHandler.getChangedItemFinished;
-import static tasche_packen.handlers.ChangeItemIntentHandler.setChangedItemFinished;
-import static tasche_packen.handlers.GetChangedItemIntentHandler.getGetChangedItemFinished;
-import static tasche_packen.handlers.GetChangedItemIntentHandler.setGetChangedItemFinished;
+import static tasche_packen.handlers.AddOrRemoveItemIntentHandler.*;
+import static tasche_packen.handlers.GetSubjectToChangeIntentHandler.setGetSubjectToChangeFin;
 
 public class WelcomeIntentHandler implements RequestHandler {
     private static boolean welcomeFinished = false;
@@ -45,8 +40,8 @@ public class WelcomeIntentHandler implements RequestHandler {
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
 
         return input.matches(Predicates.intentName(INTENT_NAME))
-                || (inputString.equals("Ja") && AidIntentHandler.getAidFinished() && !getChangedItemFinished()
-                || (getChangedItemFinished() && Answer.No.getName().equals(inputString)));
+                || (inputString.equals("Ja") && AidIntentHandler.getAidFinished() && !getAddOrRemoveItemFin()
+                || (getAddOrRemoveItemFin() && Answer.No.getName().equals(inputString)));
         //sorry @Kristina falls das iwie wichtig war, dann kannst du das gerne wieder reintun
         //return input.matches(Predicates.intentName(INTENT_NAME)) || (inputString.equals("Ja") && AidIntentHandler.getAidFinished());
 
@@ -66,12 +61,12 @@ public class WelcomeIntentHandler implements RequestHandler {
         if(subjectsToday.contains(","))
             subjectsToday = subjectsToday.substring(0, subjectsToday.lastIndexOf(',')) + " und " + subjectsToday.substring(subjectsToday.lastIndexOf(',') + 1);
         final String questionMissingSubjects = " Willst du heute alle Faecher besuchen ? ";
-       final String output = "test";     //= "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;*/
+        final String output = "Du hast heute " + subjectsToday + " . " + questionMissingSubjects;
 
         welcomeFinished = true;
         AidIntentHandler.setAidFinished(false);
-        setGetChangedItemFinished(false);
-        setChangedItemFinished(false);
+        setGetSubjectToChangeFin(false);
+        setAddOrRemoveItemFin(false);
         RemoveNotVisitedSubjectsIntentHandler.setRemoveNotVisitedSubjectsIntentHandlerFinished(false);
 
         return input.getResponseBuilder()
