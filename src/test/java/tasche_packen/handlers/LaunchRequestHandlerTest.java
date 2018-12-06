@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class LaunchRequestHandlerTest {
 
 
-/*    @Test
+    @Test
 
     public void testGoodbyeHandler() {
 
@@ -32,5 +32,5 @@ public class LaunchRequestHandlerTest {
         return inputMock;
 
 
-    }*/
+    }
 }
