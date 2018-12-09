@@ -4,7 +4,6 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
-import com.amazonaws.services.dynamodbv2.xspec.NULL;
 import tasche_packen.model.Utitlities;
 
 //mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
@@ -12,20 +11,11 @@ import java.util.*;
 
 import static tasche_packen.handlers.GetItemToChangeIntentHandler.getGetItemToChangeFin;
 import static tasche_packen.handlers.GetItemToChangeIntentHandler.setGetItemToChangeFin;
-import static tasche_packen.handlers.GetSubjectToChangeIntentHandler.getGetSubjectToChangeFin;
-import static tasche_packen.handlers.GetSubjectToChangeIntentHandler.setGetSubjectToChangeFin;
 
 public class AddOrRemoveItemIntentHandler implements RequestHandler {
-    private String subject;
-    private String item;
-    //private static String ANSWER_SLOT = "Answer";
-    private static String SUBJECT_SLOT = "Subject";
     private static String ITEM_SLOT = "Item";
     private static final String NULL_VALUE ="NULL";
-    private static final String INTENT_NAME= "ChangeItemIntent";
     private static boolean addOrRemoveItemFin = false;
-    private Slot subjectSlot;
-    private Slot itemSlot;
 
     @Override
     public boolean canHandle(HandlerInput input) {
@@ -40,15 +30,14 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
         Slot itemSlot = slots.get(ITEM_SLOT);
-        itemSlot.getName();
         String item = itemSlot == null ? NULL_VALUE : itemSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
         String status;
 
-        if(!item.equals(NULL_VALUE) && Utitlities.subjectToBeChanged != null) {
+        if(!item.equals(NULL_VALUE) && Utitlities.getSubjectToBeChanged() != null) {
 
             AttributesManager attributesManager = input.getAttributesManager();
             Map<String, Object> persistentAttributes = attributesManager.getPersistentAttributes();
-            HashSet<String> items = (HashSet<String>)persistentAttributes.get(Utitlities.subjectToBeChanged);
+            HashSet<String> items = (HashSet<String>)persistentAttributes.get(Utitlities.getSubjectToBeChanged());
             if(items!= null) {
                 if (items.contains(item)) {
                     items.remove(item);
@@ -58,7 +47,7 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
                     status = "Gegenstand erfolgreich hinzugefügt. ";
                 }
                 status += "Willst du einen weiteren Gegenstand hinzufügen? ";
-                persistentAttributes.put(Utitlities.subjectToBeChanged, items);
+                persistentAttributes.put(Utitlities.getSubjectToBeChanged(), items);
                 attributesManager.setPersistentAttributes(persistentAttributes);
                 attributesManager.savePersistentAttributes();
             }
@@ -68,7 +57,7 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
         else
             status = "Eingabe gescheitert. Willst Du es noch einmal versuchen? ";
 
-        Utitlities.subjectToBeChanged = null;
+        Utitlities.setSubjectToBeChanged(null);
         setGetItemToChangeFin(false);
         setAddOrRemoveItemFin(true);
 
