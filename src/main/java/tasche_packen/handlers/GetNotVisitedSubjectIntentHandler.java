@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static tasche_packen.handlers.AddOrRemoveItemIntentHandler.getAddOrRemoveItemFin;
+import static tasche_packen.handlers.WelcomeIntentHandler.getWelcomeFinished;
 
 public class GetNotVisitedSubjectIntentHandler implements RequestHandler {
     private static boolean getNotVisitedSubjectIntentHandlerFinished = false;
@@ -19,13 +20,14 @@ public class GetNotVisitedSubjectIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
+        if(!getWelcomeFinished()) return false;
          Request request = input.getRequestEnvelope().getRequest();
          IntentRequest intentRequest = (IntentRequest) request;
          Intent intent = intentRequest.getIntent();
          Map<String, Slot> slots = intent.getSlots();
          Slot inputSlot = slots.get(ANSWER_SLOT);
          inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-         return (inputString.equals(Answer.No.getName()) &&   WelcomeIntentHandler.getWelcomeFinished()  )||( inputString != null  && inputString.equals("Ja")&& RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished() && !getAddOrRemoveItemFin());
+         return (inputString.equals(Answer.No.getName()) &&   getWelcomeFinished()  )||( inputString != null  && inputString.equals("Ja")&& RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished() && !getAddOrRemoveItemFin());
     }
 
 
