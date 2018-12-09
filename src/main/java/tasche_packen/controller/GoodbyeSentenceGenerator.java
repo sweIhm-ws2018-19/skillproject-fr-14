@@ -2,7 +2,7 @@ package tasche_packen.controller;
 
 import tasche_packen.model.GoodbyeSentence;
 
-import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class GoodbyeSentenceGenerator {
@@ -11,8 +11,8 @@ public class GoodbyeSentenceGenerator {
 
     public static GoodbyeSentence generateGoodbyeSentence() {
         final int sentenceIndex = (int) (Math.random()*(END_INDEX ))+1;
-        System.out.println(sentenceIndex);
-        return Stream.of(GoodbyeSentence.values()).filter(sentence -> sentence.getId() == sentenceIndex).findFirst().get();
+        Optional<GoodbyeSentence> goodbyeSentence = Stream.of(GoodbyeSentence.values()).filter(sentence -> sentence.getId() == sentenceIndex).findFirst();
+        return goodbyeSentence.isPresent() ? goodbyeSentence.get() : GoodbyeSentence.valueOf("HAVE_A_NICE_DAY");
     }
 
 public static String GoodbyeSentenceAsString() {
