@@ -38,7 +38,7 @@ public class GetItemToChangeIntentHandler implements RequestHandler {
         String subject = subjectSlot == null ? null : subjectSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
         Utitlities.subjectToBeChanged = subject;
 
-        String procedure = "Welches Item möchtest Du hinzufügen oder entfernen?";
+        String procedure = "Welchen Gegenstand moechtest Du hinzufuegen oder entfernen?";
 
         setGetItemToChangeFin(true);
         setGetSubjectToChangeFin(false);

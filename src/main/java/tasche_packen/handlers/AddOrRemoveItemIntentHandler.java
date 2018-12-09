@@ -52,11 +52,12 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
             if(items!= null) {
                 if (items.contains(item)) {
                     items.remove(item);
-                    status = "Gegenstand erfolgreich entfernt";
+                    status = "Gegenstand erfolgreich entfernt. ";
                 } else {
                     items.add(item);
-                    status = "Gegenstand erfolgreich hinzugefügt";
+                    status = "Gegenstand erfolgreich hinzugefügt. ";
                 }
+                status += "Willst du einen weiteren Gegenstand hinzufügen? ";
                 persistentAttributes.put(Utitlities.subjectToBeChanged, items);
                 attributesManager.setPersistentAttributes(persistentAttributes);
                 attributesManager.savePersistentAttributes();

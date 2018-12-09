@@ -34,8 +34,8 @@ public class GetSubjectToChangeIntentHandler implements RequestHandler {
         }
         String answer = answerSlot == null ? NULL_VALUE : answerSlot.getValue();
 
-        return  input.matches(Predicates.intentName("GetSubjectToChangeIntent")) ||
-                (getAddOrRemoveItemFin() == true && Answer.Yes.getName().equals(answer));
+        return  (getAddOrRemoveItemFin() == true && "Ja".equals(answer)) ||
+                input.matches(Predicates.intentName("GetSubjectToChangeIntent"));
     }
 
     @Override
