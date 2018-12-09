@@ -15,7 +15,7 @@ public class GoodbyeSentenceGenerator {
         return goodbyeSentence.isPresent() ? goodbyeSentence.get() : GoodbyeSentence.valueOf("HAVE_A_NICE_DAY");
     }
 
-public static String GoodbyeSentenceAsString() {
+public static String goodbyeSentenceAsString() {
         return generateGoodbyeSentence().getText();
 }
 

@@ -17,7 +17,7 @@ public class GoodbyeIntentHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
-       String goodbyeText = GoodbyeSentenceGenerator.GoodbyeSentenceAsString();
+       String goodbyeText = GoodbyeSentenceGenerator.goodbyeSentenceAsString();
         return input.getResponseBuilder()
                 .withSpeech(goodbyeText)
                 .withSimpleCard("GoodbyeIntent", goodbyeText)
