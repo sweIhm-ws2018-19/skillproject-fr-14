@@ -27,26 +27,30 @@ public class Calendar {
         int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
         switch(day) {
             case java.util.Calendar.MONDAY:
-                lectures.add("Netzwerke I");
-                lectures.add("Datenbanksysteme I");
+                lectures.add("Netzwerke");
+                lectures.add("Datenbanksysteme");
                 break;
             case java.util.Calendar.TUESDAY:
-                lectures.add("Software Engineering I");
-                lectures.add("Numerische Mathematik");
-                lectures.add("Datenbanksysteme I");
+                lectures.add("Software");
+                lectures.add("Numerik");
+                lectures.add("Datenbanksysteme");
                 break;
             case java.util.Calendar.WEDNESDAY:
-                lectures.add("Numerische Mathematik");
+                lectures.add("Numerik");
                 break;
             case java.util.Calendar.THURSDAY:
-                lectures.add("Algorithmen und Datenstrukturen I");
-                lectures.add("Wahrscheinlichkeitstheorie und Statistik");
+                lectures.add("Algorithmen");
+                lectures.add("Wahrscheinlichkeitstheorie");
                 break;
             case java.util.Calendar.FRIDAY:
-                lectures.add("Software Engineering I");
-                lectures.add("Wahrscheinlichkeitstheorie und Statistik");
-                lectures.add("Algorithmen und Datenstrukturen I");
+                lectures.add("Software");
+                lectures.add("Wahrscheinlichkeitstheorie");
+                lectures.add("Algorithmen");
                 break;
+            //zum Testen am Sonntag
+            case java.util.Calendar.SUNDAY:
+                lectures.add("Software");
+                lectures.add("Netzwerke");
         }
         return lectures;
     }

@@ -14,6 +14,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 
+import static tasche_packen.handlers.GetNotVisitedSubjectIntentHandler.getGetNotVisitedSubjectIntentHandlerFinished;
+import static tasche_packen.handlers.WelcomeIntentHandler.getWelcomeFinished;
+
 
 public class GetRequiredItemsIntentHandler implements RequestHandler {
     private final SubjectItemAssignment subjectItemAssignment;
@@ -39,7 +42,7 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         Slot inputSlot = slots.get(ANSWER_SLOT);
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
         return   (inputString != null   && inputString.equals("Ja")  && WelcomeIntentHandler.getWelcomeFinished() )||
-        (inputString != null   && inputString.equals("ja")  && WelcomeIntentHandler.getWelcomeFinished() )
+                (inputString != null   && inputString.equals("ja")  && WelcomeIntentHandler.getWelcomeFinished() )
                 || (inputString != null && RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished()  && inputString.equals(Answer.No.getName()));
     }
 

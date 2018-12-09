@@ -7,6 +7,7 @@ import com.amazon.ask.request.Predicates;
 import tasche_packen.model.Answer;
 import tasche_packen.model.SubjectItemAssignment;
 
+import javax.swing.text.Utilities;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class WelcomeIntentHandler implements RequestHandler {
       String subjectsToday = tasche_packen.model.Utitlities.SUBJECTS_TODAY.getSubjectsToday().stream()
                 .distinct()
                 .filter(str -> str != null)
-                .map(str -> str.replaceAll(" I", ""))
+                .map(str -> tasche_packen.model.Utitlities.subjectMapper(str))
                 .reduce((first,second) -> first + ", " + second)
                 .orElse("nichts");
 

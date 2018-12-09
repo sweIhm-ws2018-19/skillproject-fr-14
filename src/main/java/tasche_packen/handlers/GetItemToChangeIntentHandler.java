@@ -35,10 +35,10 @@ public class GetItemToChangeIntentHandler implements RequestHandler {
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
         Slot subjectSlot = slots.get(SUBJECT_SLOT);
-        String subject = subjectSlot == null ? null : subjectSlot.getValue();
+        String subject = subjectSlot == null ? null : subjectSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
         Utitlities.subjectToBeChanged = subject;
 
-        String procedure = "Welches Item möchtest Du hinzufügen?";
+        String procedure = "Welches Item möchtest Du hinzufügen oder entfernen?";
 
         setGetItemToChangeFin(true);
         setGetSubjectToChangeFin(false);

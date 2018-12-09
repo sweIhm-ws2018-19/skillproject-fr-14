@@ -8,9 +8,7 @@ import com.amazonaws.services.dynamodbv2.xspec.NULL;
 import tasche_packen.model.Utitlities;
 
 //mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static tasche_packen.handlers.GetItemToChangeIntentHandler.getGetItemToChangeFin;
 import static tasche_packen.handlers.GetItemToChangeIntentHandler.setGetItemToChangeFin;
@@ -42,21 +40,29 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
         Slot itemSlot = slots.get(ITEM_SLOT);
-        String item = itemSlot == null ? NULL_VALUE : itemSlot.getValue();
+        itemSlot.getName();
+        String item = itemSlot == null ? NULL_VALUE : itemSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
         String status;
 
         if(!item.equals(NULL_VALUE) && Utitlities.subjectToBeChanged != null) {
+
             AttributesManager attributesManager = input.getAttributesManager();
             Map<String, Object> persistentAttributes = attributesManager.getPersistentAttributes();
-            HashSet<String> items = (HashSet<String>) persistentAttributes.get(Utitlities.subjectToBeChanged);
-            if(items.contains(item))
-                items.remove(item);
+            HashSet<String> items = (HashSet<String>)persistentAttributes.get(Utitlities.subjectToBeChanged);
+            if(items!= null) {
+                if (items.contains(item)) {
+                    items.remove(item);
+                    status = "Gegenstand erfolgreich entfernt";
+                } else {
+                    items.add(item);
+                    status = "Gegenstand erfolgreich hinzugefügt";
+                }
+                persistentAttributes.put(Utitlities.subjectToBeChanged, items);
+                attributesManager.setPersistentAttributes(persistentAttributes);
+                attributesManager.savePersistentAttributes();
+            }
             else
-                items.add(item);
-            persistentAttributes.put(subject,items);
-            attributesManager.setPersistentAttributes(persistentAttributes);
-            attributesManager.savePersistentAttributes();
-            status = "Eingabe gespeichert. Willst Du noch einen weiteren Gegenstand hinzufügen? ";
+                status = "Das Fach wurde nicht erkannt. Willst Du es noch einmal versuchen? ";
         }
         else
             status = "Eingabe gescheitert. Willst Du es noch einmal versuchen? ";
@@ -79,5 +85,6 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
     public static void setAddOrRemoveItemFin(boolean finished) {
         addOrRemoveItemFin = finished;
     }
+
 
 }
