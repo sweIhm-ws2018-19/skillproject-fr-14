@@ -5,8 +5,6 @@ import com.amazon.ask.model.Response;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import tasche_packen.model.SubjectItemAssignment;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +14,7 @@ public class GoodbyeIntentHandlerTest {
     public void goodbyeIntentHandlerCanHandle() {
         //HandlerInput Mock
         GoodbyeIntentHandler sut = new GoodbyeIntentHandler();
-        HandlerInput inputMock = HandlerTest.mockHandlerInputWithString("GoodbyeIntent");
+        HandlerInput inputMock = HandlerTest.mockHandlerInputWithIntentName("GoodbyeIntent");
         final boolean have =  sut.canHandle(inputMock);
         boolean want = true;
         assertEquals(want, have);

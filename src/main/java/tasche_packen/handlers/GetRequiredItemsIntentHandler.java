@@ -40,7 +40,7 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         IntentRequest intentRequest = (IntentRequest) request;
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
-        Slot inputSlot = slots.get(ANSWER_SLOT);
+        Slot inputSlot = slots == null ? null :  slots.get(ANSWER_SLOT);
         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
         if(getAddOrRemoveItemFin()) return false;
         return   (inputString != null   && inputString.equals("Ja")  && WelcomeIntentHandler.getWelcomeFinished() )||
