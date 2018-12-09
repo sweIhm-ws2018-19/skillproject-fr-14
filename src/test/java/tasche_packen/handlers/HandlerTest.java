@@ -23,6 +23,14 @@ public class HandlerTest {
         return inputMock;
     }
 
+    public static HandlerInput mockHandlerInputWithSlot(String intentName) {
+        HandlerInput inputMock = HandlerInput.builder()
+                .withRequestEnvelope(RequestEnvelope.builder()
+                        .withRequest(IntentRequest.builder().withIntent(Intent.builder().withName(intentName).withSlots()build()).build())
+                        .build()).build();
+        return inputMock;
+    }
+
 
     public static HandlerInput mockHandlerLaunchRequest() {
         HandlerInput inputMock = HandlerInput.builder()
