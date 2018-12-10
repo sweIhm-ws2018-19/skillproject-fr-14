@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class LaunchRequestHandlerTest {
 
-/*
+
     @Test
     public void launchRequestHandlerCanHandle() {
         final LaunchRequestHandler sut = new LaunchRequestHandler();
@@ -26,7 +26,7 @@ public class LaunchRequestHandlerTest {
 
 
 
-
+    /*
     @Test
     public void launchRequestHandlerHandles() {
        final LaunchRequestHandler sut = new LaunchRequestHandler();
@@ -34,7 +34,8 @@ public class LaunchRequestHandlerTest {
        final Response response = sut.handle(inputMock).get();
        final String have = response.toString();
        assertTrue(have.contains("Willkommen beim Skill Tasche packen"));
-    }*/
+    }
+    */
 
 
 
