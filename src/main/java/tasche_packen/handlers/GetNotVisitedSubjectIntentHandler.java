@@ -31,6 +31,7 @@ public class GetNotVisitedSubjectIntentHandler implements RequestHandler {
     }
 
 
+
     @Override
     public Optional<Response> handle(HandlerInput input) {
         String questionWhichSubjectsToMiss = "Welches Fach willst du nicht besuchen?";

@@ -20,7 +20,6 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new AidIntentHandler(),
                         new LaunchRequestHandler(),
                         new CancelAndStopIntentHandler(),
-                        new HelloWorldIntentHandler(),
                         new HelpIntentHandler(),
                         new SessionEndedRequestHandler(),
                         new GetSubjectToChangeIntentHandler(),

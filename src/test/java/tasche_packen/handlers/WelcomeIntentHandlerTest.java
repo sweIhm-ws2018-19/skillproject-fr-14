@@ -14,7 +14,7 @@ public class WelcomeIntentHandlerTest {
     public void welcomeIntentHandlerCanHandle() {
         //HandlerInput Mock
         WelcomeIntentHandler sut = new WelcomeIntentHandler(new SubjectItemAssignment());
-        HandlerInput inputMock = HandlerTest.mockHandlerInputWithString("WelcomeIntent");
+        HandlerInput inputMock = HandlerTest.mockHandlerInputWithIntentName("WelcomeIntent");
         final boolean have =  sut.canHandle(inputMock);
         boolean want = true;
         assertEquals(want, have);
