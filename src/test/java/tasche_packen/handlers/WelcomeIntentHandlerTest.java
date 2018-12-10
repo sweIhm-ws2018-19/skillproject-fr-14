@@ -13,7 +13,7 @@ public class WelcomeIntentHandlerTest {
     @Test
     public void welcomeIntentHandlerCanHandle() {
         //HandlerInput Mock
-        WelcomeIntentHandler sut = new WelcomeIntentHandler(new SubjectItemAssignment());
+        WelcomeIntentHandler sut = new WelcomeIntentHandler();
         HandlerInput inputMock = HandlerTest.mockHandlerInputWithIntentName("WelcomeIntent");
         final boolean have =  sut.canHandle(inputMock);
         boolean want = true;
@@ -25,7 +25,7 @@ public class WelcomeIntentHandlerTest {
     @Test
     public void welcomeIntentHandlerHandles() {
         //HandlerInput Mock
-        WelcomeIntentHandler sut = new WelcomeIntentHandler(new SubjectItemAssignment());
+        WelcomeIntentHandler sut = new WelcomeIntentHandler();
         final HandlerInput inputMock = HandlerTest.mockHandlerInput();
         final Response response = sut.handle(inputMock).get();
         final String have = response.toString();

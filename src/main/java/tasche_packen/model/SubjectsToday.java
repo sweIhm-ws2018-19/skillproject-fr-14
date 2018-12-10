@@ -1,23 +1,24 @@
 package tasche_packen.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubjectsToday {
 
     private Calendar today;
-    private ArrayList<String> subjectsToday;
+    private ArrayList<String> todaysSubjects;
 
     public SubjectsToday() {
         today = new Calendar();
-        this.subjectsToday = (ArrayList<String>) today.getTodayLectures();
+        this.todaysSubjects = (ArrayList<String>) today.getTodayLectures();
     }
 
     public boolean removeSubject(String subject) {
-        return this.subjectsToday.remove(subject);
+        return this.todaysSubjects.remove(subject);
     }
 
-    public ArrayList<String> getSubjectsToday() {
-        return subjectsToday;
+    public List<String> getTodaysSubjects() {
+        return todaysSubjects;
     }
 
 }

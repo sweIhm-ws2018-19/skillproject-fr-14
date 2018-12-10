@@ -24,10 +24,10 @@ public class PackInBagStreamHandler extends SkillStreamHandler {
                         new SessionEndedRequestHandler(),
                         new GetSubjectToChangeIntentHandler(),
                         new AddOrRemoveItemIntentHandler(),
-                        new WelcomeIntentHandler(subjectItemAssignment),
+                        new WelcomeIntentHandler(),
                         new GetNotVisitedSubjectIntentHandler(),
-                        new RemoveNotVisitedSubjectsIntentHandler(subjectItemAssignment),
-                        new GetRequiredItemsIntentHandler(subjectItemAssignment),
+                        new RemoveNotVisitedSubjectsIntentHandler(),
+                        new GetRequiredItemsIntentHandler(),
                         new GoodbyeIntentHandler(),
                         new GetItemToChangeIntentHandler())
 

@@ -18,7 +18,7 @@ public class RemoveNotVisitedSubjectsIntentHandlerTest {
 
     @Test
     public void removeNotVisitedSubjectIntentHandlerCanHandle() {
-        RemoveNotVisitedSubjectsIntentHandler sut = new RemoveNotVisitedSubjectsIntentHandler(new SubjectItemAssignment());
+        RemoveNotVisitedSubjectsIntentHandler sut = new RemoveNotVisitedSubjectsIntentHandler();
         final HandlerInput inputMock = HandlerTest.mockHandlerInputWithIntentName("RemoveNotVisitedSubjectIntent");
         final boolean have =  sut.canHandle(inputMock);
         boolean want = true;
@@ -28,7 +28,7 @@ public class RemoveNotVisitedSubjectsIntentHandlerTest {
     @Test
     public void removeNotVisitedSubjectIntentHandlerHandles() {
         //HandlerInput Mock
-        RemoveNotVisitedSubjectsIntentHandler sut = new RemoveNotVisitedSubjectsIntentHandler(new SubjectItemAssignment());
+        RemoveNotVisitedSubjectsIntentHandler sut = new RemoveNotVisitedSubjectsIntentHandler();
         final HandlerInput inputMock = HandlerTest.mockHandlerInput();
         final Response response = sut.handle(inputMock).get();
         final String have = response.toString();

@@ -18,7 +18,7 @@ public class GetRequiredItemsIntentHandlerTest {
     @Test
     public void getRequiredItemsIntentHandlerCanHandle() {
         //HandlerInput Mock
-        GetRequiredItemsIntentHandler sut = new GetRequiredItemsIntentHandler(new SubjectItemAssignment());
+        GetRequiredItemsIntentHandler sut = new GetRequiredItemsIntentHandler();
         Slot slot = HandlerTest.mockSlot("Answer", "nein");
         Map<String, Slot> slots = new HashMap<>();
         slots.put("Answer", slot);

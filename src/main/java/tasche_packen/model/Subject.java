@@ -1,6 +1,7 @@
 package tasche_packen.model;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Subject {
 
@@ -16,7 +17,7 @@ public class Subject {
         return name;
     }
 
-    public HashSet<String> getItems() {
+    public Set<String> getItems() {
         return items;
     }
 

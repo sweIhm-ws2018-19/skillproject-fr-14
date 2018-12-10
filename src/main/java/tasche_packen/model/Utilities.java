@@ -1,6 +1,10 @@
 package tasche_packen.model;
 
-public class Utitlities {
+public class Utilities {
+
+    private Utilities() {
+
+    }
 
     public static final SubjectsToday SUBJECTS_TODAY = new SubjectsToday();
 

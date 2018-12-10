@@ -12,22 +12,22 @@ import static tasche_packen.handlers.WelcomeIntentHandler.getWelcomeFinished;
 
 public class GetNotVisitedSubjectIntentHandler implements RequestHandler {
     private static boolean getNotVisitedSubjectIntentHandlerFinished = false;
-    private String inputString;
-    private static String ANSWER_SLOT = "Answer";
+    private static String answerSlot = "Answer";
     private static final String NULL_VALUE ="NULL";
     private static final String INTENT_NAME= "GetNotVisitedSubjectIntent";
 
 
     @Override
     public boolean canHandle(HandlerInput input) {
+        String inputString;
         if(!getWelcomeFinished()) return false;
-         Request request = input.getRequestEnvelope().getRequest();
-         IntentRequest intentRequest = (IntentRequest) request;
-         Intent intent = intentRequest.getIntent();
-         Map<String, Slot> slots = intent.getSlots();
-         Slot inputSlot = slots.get(ANSWER_SLOT);
-         inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
-         return (inputString.equals(Answer.No.getName()) &&   getWelcomeFinished()  )||( inputString != null  && inputString.equals("Ja")&& RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished() && !getAddOrRemoveItemFin());
+        Request request = input.getRequestEnvelope().getRequest();
+        IntentRequest intentRequest = (IntentRequest) request;
+        Intent intent = intentRequest.getIntent();
+        Map<String, Slot> slots = intent.getSlots();
+        Slot inputSlot = slots.get(answerSlot);
+        inputString = inputSlot == null ? NULL_VALUE : inputSlot.getValue();
+        return (inputString != null && inputString.equals(Answer.NO.getName()) &&   getWelcomeFinished()  )||( inputString != null  && inputString.equals("Ja")&& RemoveNotVisitedSubjectsIntentHandler.getRemoveNotVisitedSubjectsIntentHandlerFinished() && !getAddOrRemoveItemFin());
     }
 
 

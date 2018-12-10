@@ -1,7 +1,7 @@
 package tasche_packen.model;
 
 public  enum Answer {
-    Yes("ja"), No("nein");
+    YES("ja"), NO("nein");
 
     String name;
 

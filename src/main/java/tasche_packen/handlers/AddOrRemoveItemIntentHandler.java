@@ -4,7 +4,7 @@ import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
-import tasche_packen.model.Utitlities;
+import tasche_packen.model.Utilities;
 
 //mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
 import java.util.*;
@@ -13,7 +13,7 @@ import static tasche_packen.handlers.GetItemToChangeIntentHandler.getGetItemToCh
 import static tasche_packen.handlers.GetItemToChangeIntentHandler.setGetItemToChangeFin;
 
 public class AddOrRemoveItemIntentHandler implements RequestHandler {
-    private static String ITEM_SLOT = "Item";
+    private static String itemSlot = "Item";
     private static final String NULL_VALUE ="NULL";
     private static boolean addOrRemoveItemFin = false;
 
@@ -29,15 +29,15 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
         IntentRequest intentRequest = (IntentRequest) request;
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
-        Slot itemSlot = slots.get(ITEM_SLOT);
+        Slot itemSlot = slots.get(AddOrRemoveItemIntentHandler.itemSlot);
         String item = itemSlot == null ? NULL_VALUE : itemSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
         String status;
 
-        if(!item.equals(NULL_VALUE) && Utitlities.getSubjectToBeChanged() != null) {
+        if(!item.equals(NULL_VALUE) && Utilities.getSubjectToBeChanged() != null) {
 
             AttributesManager attributesManager = input.getAttributesManager();
             Map<String, Object> persistentAttributes = attributesManager.getPersistentAttributes();
-            HashSet<String> items = (HashSet<String>)persistentAttributes.get(Utitlities.getSubjectToBeChanged());
+            HashSet<String> items = (HashSet<String>)persistentAttributes.get(Utilities.getSubjectToBeChanged());
             if(items!= null) {
                 if (items.contains(item)) {
                     items.remove(item);
@@ -47,7 +47,7 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
                     status = "Gegenstand erfolgreich hinzugefügt. ";
                 }
                 status += "Willst du einen weiteren Gegenstand hinzufügen? ";
-                persistentAttributes.put(Utitlities.getSubjectToBeChanged(), items);
+                persistentAttributes.put(Utilities.getSubjectToBeChanged(), items);
                 attributesManager.setPersistentAttributes(persistentAttributes);
                 attributesManager.savePersistentAttributes();
             }
@@ -57,7 +57,7 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
         else
             status = "Eingabe gescheitert. Willst Du es noch einmal versuchen? ";
 
-        Utitlities.setSubjectToBeChanged(null);
+        Utilities.setSubjectToBeChanged(null);
         setGetItemToChangeFin(false);
         setAddOrRemoveItemFin(true);
 
