@@ -20,12 +20,17 @@ import java.util.logging.Logger;
 
 public class Day {
 
+
     /** Map that saves the login-data and necessary tokens to login into the ZPA-system. Out of security reasons
      *  the contents of the Map will be (filled and) deleted automatically in the @method requestZPA */
     private final Map<String, String> loginData = new HashMap<>();
 
     /** The list of lectures of the current day */
     private List<String> lectures = new ArrayList<>();
+
+
+    CookieManager cookieManager = new CookieManager();
+    CookieStore cookieStore = cookieManager.getCookieStore();
 
     private boolean zpaLoginSuccessful;
 
