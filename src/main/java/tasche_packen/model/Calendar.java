@@ -1,5 +1,15 @@
 package tasche_packen.model;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+
 import javax.json.*;
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.*;
 import java.time.LocalDateTime;
@@ -19,48 +29,51 @@ public class Calendar {
     /** The list of lectures of the current day */
     private List<String> lectures = new ArrayList<>();
 
+    private boolean zpaLoginSuccessful;
+
     /** Returns a list of the lectures that are demoed today */
     public List<String> getTodayLectures() {
-        //requestZPA();
-        lectures = new ArrayList<>();
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
-        switch(day) {
-            case java.util.Calendar.MONDAY:
-                lectures.add("Netzwerke");
-                lectures.add("Datenbanksysteme");
-                break;
-            case java.util.Calendar.TUESDAY:
-                lectures.add("Software Engineering");
-                lectures.add("Numerische Mathematik");
-                lectures.add("Datenbanksysteme");
-                break;
-            case java.util.Calendar.WEDNESDAY:
-                lectures.add("Numerische Mathematik");
-                break;
-            case java.util.Calendar.THURSDAY:
-                lectures.add("Algorithmen und Datenstrukturen");
-                lectures.add("Wahrscheinlichkeitstheorie und Statistik");
-                break;
-            case java.util.Calendar.FRIDAY:
-                lectures.add("Software Engineering");
-                lectures.add("Wahrscheinlichkeitstheorie und Statistik");
-                lectures.add("Algorithmen und Datenstrukturen");
-                break;
+        /* If the login to the ZPA system wasn't successful an alternative hardcoded list will be returned */
+        requestZPA();
+        if (!zpaLoginSuccessful) {
+            lectures = new ArrayList<>();
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+            switch (day) {
+                case java.util.Calendar.MONDAY:
+                    lectures.add("Netzwerke");
+                    lectures.add("Datenbanksysteme");
+                    break;
+                case java.util.Calendar.TUESDAY:
+                    lectures.add("Software Engineering");
+                    lectures.add("Numerische Mathematik");
+                    lectures.add("Datenbanksysteme");
+                    break;
+                case java.util.Calendar.WEDNESDAY:
+                    lectures.add("Numerische Mathematik");
+                    break;
+                case java.util.Calendar.THURSDAY:
+                    lectures.add("Algorithmen und Datenstrukturen");
+                    lectures.add("Wahrscheinlichkeitstheorie und Statistik");
+                    break;
+                case java.util.Calendar.FRIDAY:
+                    lectures.add("Software Engineering");
+                    lectures.add("Wahrscheinlichkeitstheorie und Statistik");
+                    lectures.add("Algorithmen und Datenstrukturen");
+                    break;
+            }
         }
         return lectures;
     }
 
     /** A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
      *  needed for the login. The token is saved in the Map logindata */
-    private void put_CSRF_Token_to_Login_Data() throws MalformedURLException
+    private void putCSRFTokenToLoginData() throws IOException
     {
         URL url = new URL("https://w3-o.cs.hm.edu:8000/login/ws_get_csrf_token/");
-        final String tokenPattern = "(\"csrfmiddlewaretoken\": \")\\w*(\")";
 
         try (BufferedReader fromZPA = new BufferedReader(new InputStreamReader(url.openStream())))
         {
-
             /* Because the ZPA-system only returns one line containing the csrfmiddlewaretoken, we don't have to
              use a clever way of filtering the token. A simple substring will do the trick everytime. */
             String line = fromZPA.readLine();
@@ -75,55 +88,73 @@ public class Calendar {
     /** requests the ZPA for the weekplan. After retrieving the weekplan the method fills the List lectures */
     private void requestZPA()
     {
+        zpaLoginSuccessful = false; /* Will be updated after successful login*/
+
         /* Reads the accountdata from the textfile Accountdata.txt */
-        final String filename = "Accountdata.txt";
+        final String filename = "src\\main\\java\\tasche_packen\\Accountdata.txt";
         try(BufferedReader accountDataReader = new BufferedReader(new FileReader(filename)))
         {
             String line;
             while((line = accountDataReader.readLine()) != null) {
-                String loginVariable = line.split("=", 2)[0];
-                String valueOfVariable = line.split("=", 2)[1];
-                loginData.put(loginVariable,valueOfVariable);
+                if(!line.startsWith("//")) {
+                    String loginVariable = line.split("=", 2)[0];
+                    String valueOfVariable = line.split("=", 2)[1];
+                    loginData.put(loginVariable, valueOfVariable);
+                }
             }
 
-            put_CSRF_Token_to_Login_Data();
-
-            System.out.println("Die Login Daten, die in der Map stehen: ");
-            System.out.println("username: " + loginData.get("username"));
-            System.out.println("password: " + loginData.get("password"));
-            System.out.println("csrfmiddlewaretoken: " + loginData.get("csrfmiddlewaretoken"));
-
-            zpa_login();
+            putCSRFTokenToLoginData();
+            zpaLogin();
 
             /* The first 10 letters in LocalDateTime.now give us the current Date */
             final String currentDate = LocalDateTime.now().toString().substring(0,10);
             lectures = new ArrayList<>();
 
-            /* Requesting the schedule of this week */
-            /*
-            final String url = "https://w3-o.cs.hm.edu:8000/student/ws_get_week_plan/?date=" + currentDate;
-            URL obj = new URL(url);
-            HttpURLConnection zpa_connection = (HttpURLConnection) obj.openConnection();
+            /* Requesting the schedule of this week if the login was a success*/
+            if (zpaLoginSuccessful) {
+                final String url = "https://w3-o.cs.hm.edu:8000/student/ws_get_week_plan/";
+                //URL obj = new URL(url);
+                HttpClient httpClient = HttpClients.createDefault();
+                HttpPost httppost = new HttpPost(url);
 
-            try(JsonReader jsonReader = Json.createReader(zpa_connection.getInputStream()))
-            {
-                JsonObject answer_from_ZPA = jsonReader.readObject();
-                JsonArray slots = answer_from_ZPA.getJsonArray("slots");
+                // Request parameters and other properties
+                List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("date", currentDate));
+                params.add(new BasicNameValuePair("csrftoken", loginData.get("csrfmiddlewaretoken")));
+                httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
-                for(JsonObject slot: slots.getValuesAs(JsonObject.class)) {
-                    final boolean is_regular_lecture = slot.getString("type").equals("regular");
-                    final boolean class_is_today = slot.getString("date").equals(currentDate);
-                    final boolean class_not_cancelled = !(is_regular_lecture &&
-                            slot.getString("plan_change").equals("true") &&
-                            slot.getBoolean("canceled"));
+                // Execute and get the response
+                HttpResponse response = httpClient.execute(httppost);
+                HttpEntity entity = response.getEntity();
 
-                    if ( is_regular_lecture  &&  class_is_today  &&  class_not_cancelled )
-                        lectures.add(answer_from_ZPA.getString("modules"));
+                //HttpURLConnection zpa_connection = (HttpURLConnection) obj.openConnection();
+                //zpa_connection.setRequestProperty("Cookie", "csrftoken=" + loginData.get("csrfmiddlewaretoken"));
+                if (entity != null) {
+                    /*try (JsonReader jsonReader = Json.createReader(entity.getContent())) {
+                        JsonObject answer_from_ZPA = jsonReader.readObject();
+                        JsonArray slots = answer_from_ZPA.getJsonArray("slots");
+                        System.out.println("The answer from ZPA is: " + answer_from_ZPA);
+                        System.out.println("\n The slots are: " + slots);
+                        for (JsonObject slot : slots.getValuesAs(JsonObject.class)) {
+                            final boolean is_regular_lecture = slot.getString("type").equals("regular");
+                            final boolean class_is_today = slot.getString("date").equals(currentDate);
+                            final boolean class_not_cancelled = !(is_regular_lecture &&
+                                    slot.getString("plan_change").equals("true") &&
+                                    slot.getBoolean("canceled"));
+
+                            if (is_regular_lecture && class_is_today && class_not_cancelled)
+                                lectures.add(answer_from_ZPA.getString("modules"));
+                        }
+
+                    }*/
+                    try(BufferedReader fromZPA = new BufferedReader(new InputStreamReader(entity.getContent()))) {
+                        System.out.println("This is the weekplan:");
+                        while((line = fromZPA.readLine()) != null)
+                            System.out.println(line);
+                    }
+
                 }
-
             }
-*/
-
         } catch (IOException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.SEVERE, "an IOException was thrown", e);
@@ -132,31 +163,38 @@ public class Calendar {
 
     /** With a HTTP-POST request we can login into the ZPA system. The needed parameters username, password and
      *  csrfmiddlewaretoken will be read out of the Map logindata */
-    private void zpa_login() throws IOException {
+    private void zpaLogin() throws IOException {
 
         final String url = "https://w3-o.cs.hm.edu:8000/login/ws_login/";
-        URL obj = new URL(url);
-        HttpURLConnection zpa_connection = (HttpURLConnection) obj.openConnection();
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost(url);
 
-        zpa_connection.setRequestMethod("POST");
-        zpa_connection.setRequestProperty("Accept", "application/x-www-from-urlencoded" );
-        zpa_connection.setRequestProperty("csrfmiddlewaretoken", loginData.get("csrfmiddlewaretoken") );
-        zpa_connection.setRequestProperty("Cookie", "csrftoken=" + loginData.get("csrfmiddlewaretoken"));
-        zpa_connection.setDoOutput(true);
+        // Request parameters and other properties
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("username", loginData.get("username")));
+        params.add(new BasicNameValuePair("password", loginData.get("password")));
+        params.add(new BasicNameValuePair("csrftoken", loginData.get("csrfmiddlewaretoken")));
+        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
-        JsonObject objectToBeSent = Json.createObjectBuilder()
-                .add("csrfmiddlewaretoken", loginData.get("csrfmiddlewaretoken"))
-                .add("username", loginData.get("username"))
-                .add("password", loginData.get("password"))
-                .build();
+        // Execute and get the response
+        HttpResponse response = httpClient.execute(httppost);
+        HttpEntity entity = response.getEntity();
 
-        System.out.println("\nThis is the Json sent: " +objectToBeSent);
+        if (entity != null)
+            try (BufferedReader fromZPA = new BufferedReader(new InputStreamReader(entity.getContent()))) {
+                String line = fromZPA.readLine();
+                // the login was successful
+                if (line.contains("\"error_code\": 0")) {
+                    zpaLoginSuccessful = true;
+                    System.out.println(line);
+                    final String newTokenPattern = "\\{.*\".*csrfmiddlewaretoken\":.*?\"(\\w*)\".*";
+                    loginData.put("csrfmiddlwaretoken", line.replaceFirst(newTokenPattern, "$1"));
+                    }
+                }
 
-        try (JsonWriter jsonWriter = Json.createWriter(zpa_connection.getOutputStream())){
-            jsonWriter.writeObject(objectToBeSent);
-            try(JsonReader jsonReader = Json.createReader(zpa_connection.getInputStream())) {
-                System.out.println("\nAnswer from the server: " + jsonReader.readObject());
             }
-        }
+
+    public static void main (String... args){
+        System.out.println(new Calendar().getTodayLectures());
     }
 }
