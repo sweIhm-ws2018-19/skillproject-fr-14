@@ -1,7 +1,7 @@
 package tasche_packen.model;
 
 public enum Item {
-    Notebook("Notebook"), PencilCase("Federmaeppchen"), Pad("Block"), Calculator("Taschenrechner");
+    NOTEBOOK("NOTEBOOK"), PENCIL_CASE("Federmaeppchen"), PAD("Block"), CALCULATOR("Taschenrechner");
 
     private final String name;
 
@@ -12,4 +12,5 @@ public enum Item {
     public String getName() {
         return name;
     }
+
 }

@@ -1,34 +1,35 @@
 package tasche_packen.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Subject {
-    private final String name;
-    private final List<Item> requiredItems;
+
+    private String name;
+    private HashSet<String> items;
 
     public Subject(String name) {
-        requiredItems = new ArrayList<>();
         this.name = name;
+        this.items = new HashSet<>();
     }
 
-    public void addItem(Item item) {
-        requiredItems.add(item);
-    }
-
-    public void removeItem(Item item) {
-        requiredItems.remove(item);
-    }
-
-    public List<Item> getRequiredItems() {
-        return requiredItems;
-    }
-
-    public String getName() {
+    public String getName(){
         return name;
     }
 
+    public Set<String> getItems() {
+        return items;
+    }
+
+    public Subject addItem(String... items) {
+        for(int i = 0; i < items.length; i++) {
+            this.items.add(items[i]);
+        }
+        return this;
+    }
+
+    public String removeItem(String item) {
+        this.items.remove(item);
+        return item;
+    }
 }
-
-
-
