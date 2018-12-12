@@ -3,10 +3,6 @@ package tasche_packen.model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.io.*;
 import java.net.*;
 import java.time.LocalDateTime;
