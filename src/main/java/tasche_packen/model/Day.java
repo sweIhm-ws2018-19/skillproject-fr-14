@@ -53,6 +53,7 @@ public class Day {
         requestZPA();
         /*if (!zpaLoginSuccessful) {
             lectures = new ArrayList<>();
+
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
             switch (day) {
@@ -81,8 +82,9 @@ public class Day {
                 case java.util.Calendar.SUNDAY:
                     lectures.add("Software");
                     lectures.add("Netzwerke");
-            }
-        }*/
+
+            }*/
+        //}
         return lectures;
     }
 
