@@ -24,6 +24,12 @@ public class Day {
 
     private static final String BASE_URL = "https://w3-o.cs.hm.edu:8000";
 
+    private static final String userAgent = "User-Agent";
+
+    private static final String setCookie = "Set-Cookie";
+
+    private static final String cookie = "Cookie";
+
     /** Map that saves the login-data and necessary tokens to login into the ZPA-system. Out of security reasons
      *  the contents of the Map will be (filled and) deleted automatically in the @method requestZPA */
     private final Map<String, String> loginData = new HashMap<>();
@@ -111,10 +117,8 @@ public class Day {
                 adjustLectures();
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.log(Level.WARNING, "An IOException was thrown");
         }
     }
 
@@ -125,7 +129,7 @@ public class Day {
         final URL obj = new URL(BASE_URL + GET_CRSF_URL);
         final HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
         zpaconnection.setRequestMethod("GET");
-        zpaconnection.setRequestProperty("User-Agent", USER_AGENT);
+        zpaconnection.setRequestProperty(userAgent, USER_AGENT);
         final int responseCode = zpaconnection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
@@ -137,7 +141,7 @@ public class Day {
             }
 
             /* Managing the cookies */
-            String cookiesHeader = zpaconnection.getHeaderField("Set-Cookie");
+            String cookiesHeader = zpaconnection.getHeaderField(setCookie);
             List<HttpCookie> cookieList = HttpCookie.parse(cookiesHeader);
             for (HttpCookie cookie : cookieList)
                 cookieManager.getCookieStore().add(null, cookie);
@@ -162,9 +166,9 @@ public class Day {
         URL obj = new URL(BASE_URL + LOGIN_URL);
         HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
         zpaconnection.setRequestMethod("POST");
-        zpaconnection.setRequestProperty("User-Agent", USER_AGENT);
+        zpaconnection.setRequestProperty(userAgent, USER_AGENT);
         zpaconnection.setDoOutput(true);
-        zpaconnection.setRequestProperty("Cookie", cookiestring);
+        zpaconnection.setRequestProperty(cookie, cookiestring);
 
 
         try(OutputStream toZPA = zpaconnection.getOutputStream()) {
@@ -177,7 +181,7 @@ public class Day {
 
         if(responseCode == HttpURLConnection.HTTP_OK) { // connection successful
                 /* Managing the cookies. This is also where we get the token */
-                String cookiesHeader = zpaconnection.getHeaderField("Set-Cookie");
+                String cookiesHeader = zpaconnection.getHeaderField(setCookie);
                 if (cookiesHeader != null && !cookiesHeader.isEmpty()) {
                     cookieList = HttpCookie.parse(cookiesHeader);
                     for (HttpCookie cookie : cookieList)
@@ -199,7 +203,7 @@ public class Day {
         URL obj = new URL(BASE_URL + CALENDAR_URL + "?date=" + currentDate);
         HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
         zpaconnection.setRequestMethod("GET");
-        zpaconnection.setRequestProperty("User-Agent", USER_AGENT);
+        zpaconnection.setRequestProperty(userAgent, USER_AGENT);
         zpaconnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
 
         /* Managing the cookies */
@@ -207,7 +211,7 @@ public class Day {
         String cookiestring = "";
         for (HttpCookie cookie : cookieList)
             cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
-        zpaconnection.setRequestProperty("Cookie",  cookiestring);
+        zpaconnection.setRequestProperty(cookie,  cookiestring);
 
         /* Continue with the request if the response code is OK */
         int responseCode = zpaconnection.getResponseCode();
@@ -256,8 +260,8 @@ public class Day {
         URL obj = new URL(BASE_URL + LOGOUT_URL);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        con.setRequestProperty("Cookie",  cookiestring);
+        con.setRequestProperty(userAgent, USER_AGENT);
+        con.setRequestProperty(cookie,  cookiestring);
         con.setDoOutput(true);
 
         /* Sending the data necessary for the logout */
@@ -279,7 +283,7 @@ public class Day {
                 }
 
                 /* Managing the cookies */
-                final String cookiesHeader = con.getHeaderField("Set-Cookie");
+                final String cookiesHeader = con.getHeaderField(setCookie);
                 cookieList = HttpCookie.parse(cookiesHeader);
                 for (HttpCookie cookie : cookieList)
                     cookieManager.getCookieStore().add(null, cookie);
@@ -300,12 +304,13 @@ public class Day {
             lecturesUpdated.add("Numerik");
         for(String lecture: lectures) {
             if(lecture.contains(" "))
-                lecturesUpdated.add(lecture.substring(0, lecture.indexOf(" ")));
+                lecturesUpdated.add(lecture.substring(0, lecture.indexOf(' ')));
             else
                 lecturesUpdated.add(lecture);
         }
         lectures = lecturesUpdated;
     }
+
     public static void main (String... args){
         System.out.println(new Day().getLectures());
     }
