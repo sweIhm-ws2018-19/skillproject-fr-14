@@ -33,9 +33,9 @@ public class Day {
     public List<String> getLectures() {
         /* If the login to the ZPA system wasn't successful an alternative hardcoded list will be returned */
         requestZPA();
-        if (!zpaLoginSuccessful) {
+        //if (!zpaLoginSuccessful) {
             //requestZPA();
-            lectures = new ArrayList<>();
+            /*lectures = new ArrayList<>();
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
             switch (day) {
@@ -64,8 +64,8 @@ public class Day {
                 case java.util.Calendar.SUNDAY:
                     lectures.add("Software");
                     lectures.add("Netzwerke");
-            }
-        }
+            }*/
+        //}
         return lectures;
     }
 
