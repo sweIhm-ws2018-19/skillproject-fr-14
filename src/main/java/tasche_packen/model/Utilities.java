@@ -42,4 +42,9 @@ public class Utilities {
         return subject;
     }
 
+    public static void main(String[] args) {
+        for(String s: SUBJECTS_TODAY.getTodaysSubjects()) {
+            System.out.println(s);
+        }
+    }
 }

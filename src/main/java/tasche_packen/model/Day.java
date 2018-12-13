@@ -310,5 +310,9 @@ public class Day {
     }
     public static void main (String... args){
         System.out.println(new Day().getLectures());
+        List<String> list = new Day().getLectures();
+        for(String s : list) {
+            System.out.println(s);
+        }
     }
 }
