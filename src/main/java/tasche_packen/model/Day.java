@@ -51,7 +51,7 @@ public class Day {
 
         /* If the login to the ZPA system wasn't successful an alternative hardcoded list will be returned */
         requestZPA();
-        /*if (!zpaLoginSuccessful) {
+        if (!zpaLoginSuccessful) {
             lectures = new ArrayList<>();
 
             java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -83,8 +83,8 @@ public class Day {
                     lectures.add("Software");
                     lectures.add("Netzwerke");
 
-            }*/
-        //}
+            }
+        }
         return lectures;
     }
 
