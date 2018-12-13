@@ -312,8 +312,4 @@ public class Day {
         }
         lectures = lecturesUpdated;
     }
-
-    public static void main (String... args){
-        System.out.println(new Day().getLectures());
-    }
 }
