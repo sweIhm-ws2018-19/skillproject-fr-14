@@ -62,13 +62,5 @@ public class LaunchRequestHandler implements RequestHandler {
             attributesManager.setPersistentAttributes(persistentAttributes);
             attributesManager.savePersistentAttributes();
         }
-
-
-
-
-
-
-
-
     }
 
