@@ -5,9 +5,7 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
-import tasche_packen.model.Item;
 import tasche_packen.model.Subject;
-import tasche_packen.model.Subjects;
 
 
 import java.util.*;
@@ -15,7 +13,7 @@ import java.util.*;
 public class LaunchRequestHandler implements RequestHandler {
 
     //mittlerweile unnötig, kann man immer auf true lassen
-    private final static boolean RESET = true;
+    private static final boolean RESET = true;
 
         @Override
         public boolean canHandle(HandlerInput input) {
@@ -62,5 +60,6 @@ public class LaunchRequestHandler implements RequestHandler {
             attributesManager.setPersistentAttributes(persistentAttributes);
             attributesManager.savePersistentAttributes();
         }
+
     }
 

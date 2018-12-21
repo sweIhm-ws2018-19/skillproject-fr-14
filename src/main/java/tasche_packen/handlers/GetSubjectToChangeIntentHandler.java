@@ -4,7 +4,6 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
-import tasche_packen.model.Answer;
 
 //mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
 import java.util.Map;
@@ -18,7 +17,7 @@ import static tasche_packen.handlers.WelcomeIntentHandler.setWelcomeFinished;
 
 public class GetSubjectToChangeIntentHandler implements RequestHandler {
 
-    private static String ANSWER_SLOT = "Answer";
+    private static String slotAnswer = "Answer";
     private static boolean getSubjectToChangeFin = false;
     private static final String NULL_VALUE ="NULL";
 
@@ -30,11 +29,11 @@ public class GetSubjectToChangeIntentHandler implements RequestHandler {
         Map<String, Slot> slots = intent.getSlots();
         Slot answerSlot = null;
         if(slots != null) {
-            answerSlot = slots.get(ANSWER_SLOT);
+            answerSlot = slots.get(GetSubjectToChangeIntentHandler.slotAnswer);
         }
         String answer = answerSlot == null ? NULL_VALUE : answerSlot.getValue();
 
-        return  (getAddOrRemoveItemFin() == true && "Ja".equals(answer)) ||
+        return  (getAddOrRemoveItemFin() && "Ja".equals(answer)) ||
                 input.matches(Predicates.intentName("GetSubjectToChangeIntent"));
     }
 

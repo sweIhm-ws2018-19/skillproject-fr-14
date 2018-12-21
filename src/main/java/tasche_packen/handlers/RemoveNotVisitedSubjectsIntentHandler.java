@@ -3,8 +3,7 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
-import tasche_packen.model.SubjectItemAssignment;
-import tasche_packen.model.Utitlities;
+import tasche_packen.model.Utilities;
 
 
 import java.util.Map;
@@ -16,13 +15,7 @@ import static tasche_packen.handlers.GetSubjectToChangeIntentHandler.getGetSubje
 
 public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
     private static boolean removeNotVisitedSubjectsIntentHandlerFinished = false;
-    private SubjectItemAssignment subjectItemAssignment;
     private static final String INTENT_NAME = "RemoveNotVisitedSubjectIntent";
-
-
-    public RemoveNotVisitedSubjectsIntentHandler(SubjectItemAssignment subjectItemAssignment) {
-        this.subjectItemAssignment = subjectItemAssignment;
-    }
 
     @Override
     public boolean canHandle(HandlerInput input) {
@@ -43,8 +36,7 @@ public class RemoveNotVisitedSubjectsIntentHandler implements RequestHandler {
             subjectToMiss = subjectSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
         }
 
-        //subjectItemAssignment.deleteNotVisitedSubjects(subjectToMiss);
-        Utitlities.SUBJECTS_TODAY.removeSubject(subjectToMiss);
+        Utilities.SUBJECTS_TODAY.removeSubject(subjectToMiss);
 
         GetNotVisitedSubjectIntentHandler.setGetNotVisitedSubjectIntentHandlerFinished(false);
         removeNotVisitedSubjectsIntentHandlerFinished = true;

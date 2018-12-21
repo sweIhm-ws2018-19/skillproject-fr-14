@@ -3,7 +3,7 @@ package tasche_packen.handlers;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
-import tasche_packen.model.Utitlities;
+import tasche_packen.model.Utilities;
 
 //mvn org.apache.maven.plugins:maven-assembly-plugin:2.6:assembly -DdescriptorId=jar-with-dependencies package
 import java.util.Map;
@@ -17,8 +17,7 @@ import static tasche_packen.handlers.GetSubjectToChangeIntentHandler.setGetSubje
 public class GetItemToChangeIntentHandler implements RequestHandler {
 
     private static boolean getItemToChangeFin = false;
-    private static String subjectSlot = "Subject";
-    //private static final String NULL_VALUE ="NULL";
+    private static String slotSubject = "Subject";
 
     @Override
     public boolean canHandle(HandlerInput handlerInput) {
@@ -32,9 +31,9 @@ public class GetItemToChangeIntentHandler implements RequestHandler {
         IntentRequest intentRequest = (IntentRequest) request;
         Intent intent = intentRequest.getIntent();
         Map<String, Slot> slots = intent.getSlots();
-        Slot subjectSlot = slots.get(GetItemToChangeIntentHandler.subjectSlot);
+        Slot subjectSlot = slots.get(GetItemToChangeIntentHandler.slotSubject);
         String subject = subjectSlot == null ? null : subjectSlot.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getId();
-        Utitlities.setSubjectToBeChanged(subject);
+        Utilities.setSubjectToBeChanged(subject);
 
         String procedure = "Welchen Gegenstand moechtest Du hinzufuegen oder entfernen?";
 
