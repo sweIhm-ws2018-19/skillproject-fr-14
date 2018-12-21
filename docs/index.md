@@ -19,8 +19,8 @@ Des Weiteren soll Alexa im Abhängigkeit von Wetterverhältnissen den Nutzer auf
 
 ## UML-Diagramme (Analyseklassenmodell) 
 ### Aktivitätsdiagramm
-(Überblick sowie Zoomen auf einzelne Klassen), aktualisieren Sie das Fachklassenmodell auf das was Sie implementiert haben
-![Aktivitätsdiagramm](https://github.com/sweIhm-ws2018-19/skillproject-fr-14/blob/master/Sprint2%20UML/Aktivitätsdiagramm_TaschePacken%20(1).png)
+
+![](https://github.com/sweIhm-ws2018-19/skillproject-fr-14/wikittps://github.com/sweIhm-ws2018-19/skillproject-fr-14/blob/master/Sprint2%20UML/Aktivitätsdiagramm_TaschePacken%20(1).png)
 
 ### Fachklassenmodell
 ## eine Ihrer User Stories und ihre Umsetzung
