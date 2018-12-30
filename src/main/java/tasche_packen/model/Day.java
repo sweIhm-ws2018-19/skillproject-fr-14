@@ -1,6 +1,7 @@
 package tasche_packen.model;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -24,6 +25,12 @@ public class Day {
 
     private static final String BASE_URL = "https://w3-o.cs.hm.edu:8000";
 
+    private static final String userAgent = "User-Agent";
+
+    private static final String setCookie = "Set-Cookie";
+
+    private static final String cookie = "Cookie";
+
     /** Map that saves the login-data and necessary tokens to login into the ZPA-system. Out of security reasons
      *  the contents of the Map will be (filled and) deleted automatically in the @method requestZPA */
     private final Map<String, String> loginData = new HashMap<>();
@@ -37,15 +44,19 @@ public class Day {
     /** Will be resetted on every call of the method requestZPA. It is used to check, if we need to
      * an alternative output in case the login to the ZPA was not successful*/
     private boolean zpaLoginSuccessful;
+    boolean gotWeekplan = false;
 
     private final Logger logger = Logger.getAnonymousLogger();
 
     /** Returns a list of the lectures that are demoed today */
     public List<String> getLectures() {
+        zpaLoginSuccessful = false;
+        gotWeekplan = false;
 
         /* If the login to the ZPA system wasn't successful an alternative hardcoded list will be returned */
         requestZPA();
-        /*if (!zpaLoginSuccessful) {
+        logger.log(Level.INFO, "ZPALogin was successful: " + zpaLoginSuccessful);
+        if (!(zpaLoginSuccessful && gotWeekplan)) {
             lectures = new ArrayList<>();
 
             java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -77,8 +88,8 @@ public class Day {
                     lectures.add("Software");
                     lectures.add("Netzwerke");
 
-            }*/
-        //}
+            }
+        }
         return lectures;
     }
 
@@ -88,9 +99,6 @@ public class Day {
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
         cookieStore.removeAll();
-
-
-        zpaLoginSuccessful = false; /* Will be updated after successful login*/
 
         /* Reads the accountdata from the textfile Accountdata.txt */
         final String filename = "src\\main\\java\\tasche_packen\\Accountdata.txt";
@@ -113,21 +121,19 @@ public class Day {
                 adjustLectures();
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "An IOException was thrown");
         }
     }
 
-        /** A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
+    /** A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
      *  needed for the login. The token is saved in the Map logindata */
     private void putCSRFTokenToLoginData() throws IOException {
         /* Preparing the HTTP Get request to retrieve the csrftoken */
         final URL obj = new URL(BASE_URL + GET_CRSF_URL);
         final HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
         zpaconnection.setRequestMethod("GET");
-        zpaconnection.setRequestProperty("User-Agent", USER_AGENT);
+        zpaconnection.setRequestProperty(userAgent, USER_AGENT);
         final int responseCode = zpaconnection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
@@ -139,7 +145,7 @@ public class Day {
             }
 
             /* Managing the cookies */
-            String cookiesHeader = zpaconnection.getHeaderField("Set-Cookie");
+            String cookiesHeader = zpaconnection.getHeaderField(setCookie);
             List<HttpCookie> cookieList = HttpCookie.parse(cookiesHeader);
             for (HttpCookie cookie : cookieList)
                 cookieManager.getCookieStore().add(null, cookie);
@@ -153,97 +159,112 @@ public class Day {
      *  csrfmiddlewaretoken will be read out of the Map logindata */
     private void zpaLogin() throws IOException {
 
-        /* Managing the cookies */
-        List <HttpCookie> cookieList = cookieStore.getCookies();
-        String cookiestring = "";
-        for (HttpCookie cookie : cookieList)
-            cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
+        for (int counter = 0; !zpaLoginSuccessful && counter < 10; counter++)
+        {
+            /* Managing the cookies */
+            List<HttpCookie> cookieList = cookieStore.getCookies();
+            String cookiestring = "";
+            for (HttpCookie cookie : cookieList)
+                cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
+
+            /* Preparing the POST request for the login */
+            URL obj = new URL(BASE_URL + LOGIN_URL);
+            HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
+            zpaconnection.setRequestMethod("POST");
+            zpaconnection.setRequestProperty(userAgent, USER_AGENT);
+            zpaconnection.setDoOutput(true);
+            zpaconnection.setRequestProperty(cookie, cookiestring);
 
 
-        /* Preparing the POST request for the login */
-        URL obj = new URL(BASE_URL + LOGIN_URL);
-        HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
-        zpaconnection.setRequestMethod("POST");
-        zpaconnection.setRequestProperty("User-Agent", USER_AGENT);
-        zpaconnection.setDoOutput(true);
-        zpaconnection.setRequestProperty("Cookie", cookiestring);
+            String answerFromZPA = "";
+            try (OutputStream toZPA = zpaconnection.getOutputStream()) {
+                String loginstr = "username=" + loginData.get("username") + "&password=" + loginData.get("password");
+                toZPA.write(loginstr.getBytes());
+                try(final BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream()))) {
+                    String line;
+                    while ((line = fromZPA.readLine()) != null)
+                        answerFromZPA += line;
+                }
+                zpaLoginSuccessful = answerFromZPA.contains("error_code\": 0");
+            }
 
+            final int responseCode = zpaconnection.getResponseCode();
 
-        try(OutputStream toZPA = zpaconnection.getOutputStream()) {
-            String loginstr = "username="+loginData.get("username")+"&password="+loginData.get("password");
-            toZPA.write(loginstr.getBytes());
-            toZPA.flush();
-        }
-
-        final int responseCode = zpaconnection.getResponseCode();
-
-        if(responseCode == HttpURLConnection.HTTP_OK) { // connection successful
+            if (responseCode == HttpURLConnection.HTTP_OK) { // connection successful
                 /* Managing the cookies. This is also where we get the token */
-                String cookiesHeader = zpaconnection.getHeaderField("Set-Cookie");
+                String cookiesHeader = zpaconnection.getHeaderField(setCookie);
                 if (cookiesHeader != null && !cookiesHeader.isEmpty()) {
                     cookieList = HttpCookie.parse(cookiesHeader);
                     for (HttpCookie cookie : cookieList)
                         cookieManager.getCookieStore().add(null, cookie);
                 }
-                zpaLoginSuccessful = true;
-        }
-        else {
-            logger.log(Level.WARNING, "LOGIN request did not work");
+            } else {
+                logger.log(Level.WARNING, "LOGIN request did not work");
+            }
         }
     }
 
 
     private void getWeekplan() throws IOException {
 
-        final String currentDate = LocalDateTime.now().toString().substring(0,10);
+        final String currentDate = LocalDateTime.now().toString().substring(0, 10);
 
-        /* Preparing the HTTP Post for retrieving the weekplan */
-        URL obj = new URL(BASE_URL + CALENDAR_URL + "?date=" + currentDate);
-        HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
-        zpaconnection.setRequestMethod("GET");
-        zpaconnection.setRequestProperty("User-Agent", USER_AGENT);
-        zpaconnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
 
-        /* Managing the cookies */
-        List <HttpCookie> cookieList = cookieStore.getCookies();
-        String cookiestring = "";
-        for (HttpCookie cookie : cookieList)
-            cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
-        zpaconnection.setRequestProperty("Cookie",  cookiestring);
+        /* Sometimes the zpa doesn't send the weekplan or the connection fails. If thats the case, we take up to
+         * 10 tries to retrieve the weekplan */
+        for (int counter = 0; !gotWeekplan && counter < 10; counter++) {
 
-        /* Continue with the request if the response code is OK */
-        int responseCode = zpaconnection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK)
-        {
-            try (BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream())))
-            {
-                String line;
-                String response = "";
-                while ((line = fromZPA.readLine()) != null) {
-                    response += line;
+            /* Preparing the HTTP Post for retrieving the weekplan */
+            URL obj = new URL(BASE_URL + CALENDAR_URL + "?date=" + currentDate);
+            HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
+            zpaconnection.setRequestMethod("GET");
+            zpaconnection.setRequestProperty(userAgent, USER_AGENT);
+            zpaconnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
+
+            /* Managing the cookies */
+            List<HttpCookie> cookieList = cookieStore.getCookies();
+            String cookiestring = "";
+            for (HttpCookie cookie : cookieList)
+                cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
+            zpaconnection.setRequestProperty(cookie, cookiestring);
+
+            /* Continue with the request if the response code is OK */
+            int responseCode = zpaconnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                try (BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream()))) {
+                    String line;
+                    String response = "";
+                    while ((line = fromZPA.readLine()) != null) {
+                        response += line;
+                    }
+
+                    /* The ZPA response will be casted to a JSONObject to retrieve all the
+                     *  lectures you meet the conditions specified down below in the if clause*/
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        JSONArray slots = object.getJSONArray("slots");
+                        Iterator<Object> iterator = slots.iterator();
+                        gotWeekplan = true;
+                        while (iterator.hasNext()) {
+                            final JSONObject slot = (JSONObject) iterator.next();
+                            final String slotAsString = slot.toString();
+                            final String lectureRaw = slot.getJSONArray("modules").toString();
+                            final String lecture = lectureRaw.substring(2, lectureRaw.length() - 2);
+                            final boolean is_regular_lecture = slotAsString.contains("regular");
+                            final boolean lecture_is_today = slotAsString.contains(currentDate);
+                            final boolean lecture_canceled = slotAsString.contains("plan_change\": true") && slotAsString.contains("canceled\": true");
+                            final boolean lecture_already_added = lectures.contains(lecture);
+                            if (is_regular_lecture && lecture_is_today && !lecture_canceled && !lecture_already_added)
+                                lectures.add(lecture);
+                        }
+                    } catch (JSONException e) {
+                        logger.log(Level.WARNING, "A JSONException was thrown");
+                    }
                 }
-
-                /* The ZPA response will be casted to a JSONObject to retrieve all the
-                *  lectures you meet the conditions specified down below in the if clause*/
-                JSONObject object = new JSONObject(response);
-                JSONArray slots = object.getJSONArray("slots");
-                Iterator<Object> iterator = slots.iterator();
-                while(iterator.hasNext()) {
-                    final JSONObject slot = (JSONObject) iterator.next();
-                    final String slotAsString = slot.toString();
-                    final String lectureRaw = slot.getJSONArray("modules").toString();
-                    final String lecture = lectureRaw.substring(2, lectureRaw.length() - 2);
-                    final boolean is_regular_lecture = slotAsString.contains("regular");
-                    final boolean lecture_is_today = slotAsString.contains(currentDate);
-                    final boolean lecture_canceled = slotAsString.contains("plan_change\": true") && slotAsString.contains("canceled\": true");
-                    final boolean lecture_already_added = lectures.contains(lecture);
-                    if(is_regular_lecture && lecture_is_today && !lecture_canceled && !lecture_already_added)
-                        lectures.add(lecture);
-                }
+            } else {
+                logger.log(Level.WARNING, "getWeekplan request not worked");
             }
-        } else{
-            logger.log(Level.WARNING, "getWeekplan request not worked");
-            }
+        }
     }
     private void zpaLogout() throws IOException {
 
@@ -258,8 +279,8 @@ public class Day {
         URL obj = new URL(BASE_URL + LOGOUT_URL);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        con.setRequestProperty("Cookie",  cookiestring);
+        con.setRequestProperty(userAgent, USER_AGENT);
+        con.setRequestProperty(cookie,  cookiestring);
         con.setDoOutput(true);
 
         /* Sending the data necessary for the logout */
@@ -281,10 +302,12 @@ public class Day {
                 }
 
                 /* Managing the cookies */
-                final String cookiesHeader = con.getHeaderField("Set-Cookie");
-                cookieList = HttpCookie.parse(cookiesHeader);
-                for (HttpCookie cookie : cookieList)
-                    cookieManager.getCookieStore().add(null, cookie);
+                final String cookiesHeader = con.getHeaderField(setCookie);
+                if (cookiesHeader != null) {
+                    if ((cookieList = HttpCookie.parse(cookiesHeader)) != null)
+                        for (HttpCookie cookie : cookieList)
+                            cookieManager.getCookieStore().add(null, cookie);
+                }
             }
         } else {
             logger.log(Level.WARNING, "LOGOUT request not worked");
@@ -302,17 +325,10 @@ public class Day {
             lecturesUpdated.add("Numerik");
         for(String lecture: lectures) {
             if(lecture.contains(" "))
-                lecturesUpdated.add(lecture.substring(0, lecture.indexOf(" ")));
+                lecturesUpdated.add(lecture.substring(0, lecture.indexOf(' ')));
             else
                 lecturesUpdated.add(lecture);
         }
         lectures = lecturesUpdated;
-    }
-    public static void main (String... args){
-        System.out.println(new Day().getLectures());
-        List<String> list = new Day().getLectures();
-        for(String s : list) {
-            System.out.println(s);
-        }
     }
 }
