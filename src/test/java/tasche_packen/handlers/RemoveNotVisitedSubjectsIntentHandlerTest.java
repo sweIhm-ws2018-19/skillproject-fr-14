@@ -41,5 +41,4 @@ public class RemoveNotVisitedSubjectsIntentHandlerTest {
         Assert.assertTrue(have.contains( "Willst du noch ein Fach nicht besuchen?"));
     }
 
-
 }

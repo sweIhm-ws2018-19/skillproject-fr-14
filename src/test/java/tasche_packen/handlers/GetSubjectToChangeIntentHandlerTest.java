@@ -1,7 +1,9 @@
 package tasche_packen.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.model.Response;
 import com.amazon.ask.model.Slot;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -32,6 +34,16 @@ public class GetSubjectToChangeIntentHandlerTest {
         final boolean have =  sut.canHandle(inputMock);
         boolean want = true;
         assertEquals(want, have);
+    }
+
+    @Test
+    public void getSubjectToChangeHandles(){
+        GetSubjectToChangeIntentHandler sut = new GetSubjectToChangeIntentHandler();
+        //mock input
+        final HandlerInput inputMock = HandlerTest.mockHandlerInput();
+        final Response response = sut.handle(inputMock).get();
+        final String have = response.toString();
+        Assert.assertTrue(have.contains( "Zu welchem Fach willst Du einen Gegenstand hinzufuegen oder entfernen?"));
     }
 
 }
