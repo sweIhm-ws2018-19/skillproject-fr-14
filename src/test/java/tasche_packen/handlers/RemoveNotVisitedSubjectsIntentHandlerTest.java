@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static tasche_packen.handlers.AddOrRemoveItemIntentHandler.setAddOrRemoveItemFin;
+import static tasche_packen.handlers.GetItemToChangeIntentHandler.setGetItemToChangeFin;
+import static tasche_packen.handlers.GetSubjectToChangeIntentHandler.setGetSubjectToChangeFin;
 
 
 public class RemoveNotVisitedSubjectsIntentHandlerTest {
@@ -19,6 +22,9 @@ public class RemoveNotVisitedSubjectsIntentHandlerTest {
     @Test
     public void removeNotVisitedSubjectIntentHandlerCanHandle() {
         RemoveNotVisitedSubjectsIntentHandler sut = new RemoveNotVisitedSubjectsIntentHandler();
+        setAddOrRemoveItemFin(false);
+        setGetItemToChangeFin(false);
+        setGetSubjectToChangeFin(false);
         final HandlerInput inputMock = HandlerTest.mockHandlerInputWithIntentName("RemoveNotVisitedSubjectIntent");
         final boolean have =  sut.canHandle(inputMock);
         boolean want = true;
