@@ -5,11 +5,14 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.amazon.ask.request.Predicates;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import tasche_packen.model.SubjectItemAssignment;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class LaunchRequestHandlerTest {
 
@@ -22,17 +25,15 @@ public class LaunchRequestHandlerTest {
         Assert.assertEquals(want, have );
     }
 
-
-
-/*  @Test
+    /*@Test
     public void launchRequestHandlerHandles() {
        final LaunchRequestHandler sut = new LaunchRequestHandler();
        final HandlerInput inputMock = HandlerTest.mockHandlerInput();
        final Response response = sut.handle(inputMock).get();
        final String have = response.toString();
        assertTrue(have.contains("Willkommen beim Skill Tasche packen"));
-    }
-    */
+    }*/
+
 
 
 

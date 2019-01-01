@@ -21,12 +21,4 @@ public class SubjectsToday {
         return todaysSubjects;
     }
 
-    public static void main(String[] args) {
-        SubjectsToday st = new SubjectsToday();
-        List<String> l = st.getTodaysSubjects();
-        for(String s : l) {
-            System.out.println(s);
-        }
-    }
-
 }
