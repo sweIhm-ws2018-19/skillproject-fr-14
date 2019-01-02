@@ -36,14 +36,14 @@ public class LaunchRequestHandler implements RequestHandler {
         }
 
         private void resetDatabase(HandlerInput input) {
-            final Subject netzwerkeVL = new Subject("Netzwerke").addItem("Federmaeppchen");
-            final Subject datenbankenVL = new Subject("Datenbanksysteme").addItem("Federmaeppchen", "Kaffee");
-            final Subject sweIVL = new Subject("Software").addItem("Notebook", "Kaffee");
-            final Subject numerischeVL = new Subject("Numerik").addItem("Federmaeppchen", "Block");
-            final Subject difDGLVL = new Subject("Differentialrechnung").addItem("Block");
-            final Subject algodatVL = new Subject("Algorithmen").addItem("Federmaeppchen");
-            final Subject statistikVL = new Subject("Wahrscheinlichkeitsrechnung").addItem("Block");
-            final Subject operationsVL = new Subject("Operations").addItem("Federmaeppchen");
+            final Subject netzwerkeVL = new Subject("Netzwerke").addItem("Laptop", "Maus", "Ladekabel", "Block", "Stifte");
+            final Subject datenbankenVL = new Subject("Datenbanksysteme").addItem("Block", "Buntstifte", "Kugelschreiber", "Laptop");
+            final Subject sweIVL = new Subject("Software").addItem("Laptop", "Maus", "Block", "Stifte", "Diagramm-Tafel");
+            final Subject numerischeVL = new Subject("Numerik").addItem("Laptop", "Block", "Maus", "Stifte");
+            final Subject difDGLVL = new Subject("Differentialrechnung").addItem("Block", "Taschenrechner", "Kugelschreiber", "Bleistift");
+            final Subject algodatVL = new Subject("Algorithmen").addItem("Laptop", "Kugelschreiber", "Block", "Ladekabel");
+            final Subject statistikVL = new Subject("Wahrscheinlichkeitsrechnung").addItem("Block", "bunte Stifte", "Kugelschreiber");
+            final Subject operationsVL = new Subject("Operations").addItem("Skript", "Block", "Kugelschreiber", "Bleistift", "Buntstifte", "Geodreieck", "Taschenrechner");
 
             AttributesManager attributesManager = input.getAttributesManager();
             Map<String, Object> persistentAttributes = attributesManager.getPersistentAttributes();
