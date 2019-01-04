@@ -12,7 +12,16 @@ Damit der User nicht ins kalte Wasser geschmissen und er sich ohne weitere Infor
 Um einen Alexa-Skill aufzusetzen muss man zunächst eine AWS-Lambda Funktion erstellen. In diese wird der Java-Code in Form einer jar-Datei eingefügt, die man zuvor mit Maven gebaut hat.
 Außerdem benötigt man einen Account in der Amazon Developer Console. Dort erstellt man ebenfalls eine Funktion und verknüpft sie über den Menüpunkt 'Endpoints' mit AWS.
 ##### Aufbau der Dialoge
-Jede Aktion wird über einen Intent aufgerufen. Bei welcher Spracheingabe dieser aufgerufen werden soll, lässt sich in der Developer Console konfigurieren. Um Werte, die eingegeben werden können, einzuschränken gibt es sogenannte Slots, die man auch in der Developer Console hinterlegen kann. Im Code gibt es für jeden Intent einen zugehörigen IntentHandler. Dieser wird aufgerufen, wenn die passende Eingabe (evtl. mit Slot) angegeben wird. 
+Jede Aktion wird über einen Intent aufgerufen. Bei welcher Spracheingabe dieser aufgerufen werden soll, lässt sich in der Developer Console konfigurieren. Um Werte, die eingegeben werden können, einzuschränken, gibt es sogenannte Slots, die man auch in der Developer Console hinterlegen kann. Im Code gibt es für jeden Intent einen zugehörigen IntentHandler. Dieser wird aufgerufen, wenn die passende Eingabe (evtl. mit Slot) angegeben wird. 
+##### Handler
+Folgende Handler sind im Skill 'Tasche packen' vorhanden:
+- PackInBagStreamHandler: Dieser Handler wird bei Aufruf des Skills aufgerufen und erzeugt alle weiteren Handler.
+- LaunchRequestHandler: Dieser Handler wird direkt nach dem Aufruf des Skills gestartet und heißt den User willkommen.
+- WelcomeIntentHandler: Dieser Handler folgt auf den LaunchRequestHandler und fragt den User, ob er alle Fächer besuchen will.
+- AidIntentHandler: Dieser Handler bietet eine Hilfe-Funktion, bei der alle möglichen Funktionen aufgezählt werden. 
+- GetSubjectToChangeIntentHandler: Hier kann man einen Gegenstand zu einem Fach hinzufügen oder entfernen.
+- AddOrRemoveItemIntentHandler: Dieser Handler gibt eine Rückmeldung über das erfolgreiche Hinzufügen/Entfernen eines Gegenstandes.
+- GoodbyeIntentHandler: Dieser Handler beendet den Skill. 
 
 ### Datenbankanbindung
 
