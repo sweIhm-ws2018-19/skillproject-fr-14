@@ -24,6 +24,5 @@ Des Weiteren soll Alexa im Abhängigkeit von Wetterverhältnissen den Nutzer auf
 
 ### Fachklassenmodell
 
-[Seite für Fachklassenmodell](https://github.com/sweIhm-ws2018-19/skillproject-fr-14/blob/master/docs/fachklassendiagramm.md)
 ## eine Ihrer User Stories und ihre Umsetzung
 (wählen Sie hier ein "Highlight" aus)
