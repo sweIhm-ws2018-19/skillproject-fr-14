@@ -20,6 +20,7 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
          return input.getResponseBuilder()
                  .withSpeech(output)
                  .withSimpleCard("HelloWorld", output)
+                 .withShouldEndSession(true)
                  .build();
      }
  }
