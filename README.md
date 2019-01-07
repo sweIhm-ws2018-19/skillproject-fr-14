@@ -24,7 +24,12 @@ Folgende Handler sind im Skill 'Tasche packen' vorhanden:
 - GoodbyeIntentHandler: Dieser Handler beendet den Skill. 
 
 ### Datenbankanbindung
-### Setup
-Um die Datenbank benutzen zu können muss in der jeweiligen Lambda-Funktion zunächst die Dynamo-DB ausgewählt werden. Damit die Datenbank auch alle Berechtigungen hat müssen der lambda_basic_execution Rolle noch weitere Berechtigungen hinzugefügt werden
+#### Setup
+Um die Datenbank benutzen zu können muss in der jeweiligen Lambda-Funktion zunächst die Dynamo-DB ausgewählt werden. Damit die Datenbank auch alle Berechtigungen hat müssen der lambda_basic_execution Rolle noch weitere Berechtigungen hinzugefügt werden. 
+Daraufhin wird eine Tabelle mit wie im LaunchRequest spezifiziertem Namen und Primärschlüssel "id" erstellt. Damit die Datenbank befüllt wird muss der LaunchRequest mindestens einmal auf der Konsole oder im AWS ausgeführt werden.
+#### Funktionsprinzip
+Die Datenbank wird bei der ersten Verwendung automatisch mit default-Werten befüllt. Dabei wird jedem Fach eine Liste von Gegenständen in der Datenbank-Map zugeordnet. Bei folgenden Skill-Aufrufen werden die während der letzten Session gespeicherten Werte aber nicht überschrieben, da abgeprüft wird, ob die Datenbank leer ist. Damit bleiben geänderte Werte auch über mehrere Aufrufe hinweg persistent gespeichert.
+#### Änderungsmöglichkeiten
+Im Skill selbst kann über zwei Handler hinweg ein Fach und ein hinzuzufügender oder ein zu entfernender Gegenstand festgelegt werden. Falls der Gegenstand bereits dem Fach zugeordnet ist, wird er aus der Liste entfernt, andernfalls hinzugefügt. Die möglichen Gegenstände werden dabei durch die in der Konsole spezifizierten Slots beschränkt, da andere Eingaben schwierig zu erkennen sind.
 
 ### ZPA-Anbindung
