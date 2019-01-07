@@ -25,6 +25,6 @@ Folgende Handler sind im Skill 'Tasche packen' vorhanden:
 
 ### Datenbankanbindung
 ### Setup
-Um die Datenbank benutzen zu können muss in der jeweiligen Lambda-Funktion zunächst die Dynamo-DB ausgewählt werden.
+Um die Datenbank benutzen zu können muss in der jeweiligen Lambda-Funktion zunächst die Dynamo-DB ausgewählt werden. Damit die Datenbank auch alle Berechtigungen hat müssen der lambda_basic_execution Rolle noch weitere Berechtigungen hinzugefügt werden
 
 ### ZPA-Anbindung
