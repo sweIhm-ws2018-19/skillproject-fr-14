@@ -33,3 +33,4 @@ Die Datenbank wird bei der ersten Verwendung automatisch mit default-Werten bef�
 Im Skill selbst kann über zwei Handler hinweg ein Fach und ein hinzuzufügender oder ein zu entfernender Gegenstand festgelegt werden. Falls der Gegenstand bereits dem Fach zugeordnet ist, wird er aus der Liste entfernt, andernfalls hinzugefügt. Die möglichen Gegenstände werden dabei durch die in der Konsole spezifizierten Slots beschränkt, da andere Eingaben schwierig zu erkennen sind.
 
 ### ZPA-Anbindung
+TODO
