@@ -24,6 +24,7 @@ Folgende Handler sind im Skill 'Tasche packen' vorhanden:
 - GoodbyeIntentHandler: Dieser Handler beendet den Skill. 
 
 ### Datenbankanbindung
-
+### Setup
+Um die Datenbank benutzen zu können muss in der jeweiligen Lambda-Funktion zunächst die Dynamo-DB ausgewählt werden.
 
 ### ZPA-Anbindung
