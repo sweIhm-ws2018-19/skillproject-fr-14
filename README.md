@@ -33,4 +33,9 @@ Die Datenbank wird bei der ersten Verwendung automatisch mit default-Werten bef�
 Im Skill selbst kann über zwei Handler hinweg ein Fach und ein hinzuzufügender oder ein zu entfernender Gegenstand festgelegt werden. Falls der Gegenstand bereits dem Fach zugeordnet ist, wird er aus der Liste entfernt, andernfalls hinzugefügt. Die möglichen Gegenstände werden dabei durch die in der Konsole spezifizierten Slots beschränkt, da andere Eingaben schwierig zu erkennen sind.
 
 ### ZPA-Anbindung
-TODO
+##### Setup
+Die Klasse Day hat schon den automatischen Login in das ZPA System implementiert. Damit auch wirklich der persönliche Stundenplan aus dem Netz geladen werden kann, müssen nur noch die Login Daten im Sourcecode der Day-Klasse in eine Map eingetragen werden. Die Stelle für die Login Daten ist mit Kommentaren hervorgehoben.
+#### Funktionsprinzip
+Zuerst wird ein Token zur Authentifizierung von dem ZPA abgefragt. Anschließend wird für den ZPA-Login ein HTTP-POST request an das ZPA gesendet. Wichtig ist dabei, dass in ein Cookie-Header mit dem Value der Login-Daten und des Token hinterlegt sind. Sobald man eingeloggt ist, kann man den Stundenplan in Form eines JSON-Files abfragen und sich wieder ausloggen. Aus dem JSON-File werden dann die Vorlesungen und Praktika gefiltert, die am Tag der Abfrage tatsächlich stattfinden und nicht ausfallen. 
+#### Zusatzinfo
+Im Fall, dass das ZPA-System nicht online ist, oder der Stundenplan aus irgendeinem anderen Grund nicht abgefragt werden konnte, wird ein alternativer Vorlesungsplan ausgegeben.
