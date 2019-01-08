@@ -17,6 +17,7 @@ Außerdem gibt es eine Hilfe-Funktion, die dem Nutzer alle vorhandenen Funktione
 
 
 ## Skizze des Product Backlog
+![](https://github.com/sweIhm-ws2018-19/skillproject-fr-14/blob/master/InkedInkedproduct_backlog_LI.jpg)
 
 
 
