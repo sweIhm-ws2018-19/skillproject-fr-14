@@ -21,7 +21,7 @@ public class GoodbyeIntentHandler implements RequestHandler {
         return input.getResponseBuilder()
                 .withSpeech(goodbyeText)
                 .withSimpleCard("GoodbyeIntent", goodbyeText)
-                .withReprompt("")
+                .withShouldEndSession(true)
                 .build();
     }
 }

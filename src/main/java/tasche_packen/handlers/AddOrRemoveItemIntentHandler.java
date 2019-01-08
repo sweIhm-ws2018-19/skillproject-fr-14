@@ -44,9 +44,9 @@ public class AddOrRemoveItemIntentHandler implements RequestHandler {
                     status = "Gegenstand erfolgreich entfernt. ";
                 } else {
                     items.add(item);
-                    status = "Gegenstand erfolgreich hinzugefügt. ";
+                    status = "Gegenstand erfolgreich hinzugefuegt. ";
                 }
-                status += "Willst du einen weiteren Gegenstand hinzufügen? ";
+                status += "Willst du einen weiteren Gegenstand hinzufuegen? ";
                 persistentAttributes.put(Utilities.getSubjectToBeChanged(), items);
                 attributesManager.setPersistentAttributes(persistentAttributes);
                 attributesManager.savePersistentAttributes();

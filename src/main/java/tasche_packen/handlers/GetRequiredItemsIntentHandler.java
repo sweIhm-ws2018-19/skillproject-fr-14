@@ -56,6 +56,7 @@ public class GetRequiredItemsIntentHandler implements RequestHandler {
         if(requiredItems.contains(","))
             requiredItems = requiredItems.substring(0, requiredItems.lastIndexOf(',')) + " und "
                     + requiredItems.substring(requiredItems.lastIndexOf(',') + 1);
+        if(!requiredItems.contains(" ")) requiredItems = "ein " + requiredItems;
 
 
         final String output = answer + requiredItems;

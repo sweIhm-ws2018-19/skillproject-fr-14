@@ -31,24 +31,32 @@ public class Day {
 
     private static final String cookie = "Cookie";
 
-    /** Map that saves the login-data and necessary tokens to login into the ZPA-system. Out of security reasons
-     *  the contents of the Map will be (filled and) deleted automatically in the @method requestZPA */
+    /**
+     * Map that saves the login-data and necessary tokens to login into the ZPA-system. Out of security reasons
+     * the contents of the Map will be (filled and) deleted automatically in the @method requestZPA
+     */
     private final Map<String, String> loginData = new HashMap<>();
 
-    /** The list of lectures of the current day */
+    /**
+     * The list of lectures of the current day
+     */
     private List<String> lectures = new ArrayList<>();
 
     private final CookieManager cookieManager = new CookieManager();
     private final CookieStore cookieStore = cookieManager.getCookieStore();
 
-    /** Will be resetted on every call of the method requestZPA. It is used to check, if we need to
-     * an alternative output in case the login to the ZPA was not successful*/
+    /**
+     * Will be resetted on every call of the method requestZPA. It is used to check, if we need to
+     * an alternative output in case the login to the ZPA was not successful
+     */
     private boolean zpaLoginSuccessful;
     boolean gotWeekplan = false;
 
     private final Logger logger = Logger.getAnonymousLogger();
 
-    /** Returns a list of the lectures that are demoed today */
+    /**
+     * Returns a list of the lectures that are demoed today
+     */
     public List<String> getLectures() {
         zpaLoginSuccessful = false;
         gotWeekplan = false;
@@ -94,7 +102,9 @@ public class Day {
         return lectures;
     }
 
-    /** requests the ZPA for the weekplan. After retrieving the weekplan the method fills the List lectures */
+    /**
+     * requests the ZPA for the weekplan. After retrieving the weekplan the method fills the List lectures
+     */
     private void requestZPA() {
         /* The ZPA uses cookies to verify the user */
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
@@ -126,8 +136,10 @@ public class Day {
 
     }
 
-        /** A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
-     *  needed for the login. The token is saved in the Map logindata */
+    /**
+     * A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
+     * needed for the login. The token is saved in the Map logindata
+     */
     private void putCSRFTokenToLoginData() throws IOException {
         /* Preparing the HTTP Get request to retrieve the csrftoken */
         final URL obj = new URL(BASE_URL + GET_CRSF_URL);
@@ -138,7 +150,7 @@ public class Day {
 
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
             final StringBuffer response = new StringBuffer();
-            try(BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream()))) {
+            try (BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream()))) {
                 String line;
                 while ((line = fromZPA.readLine()) != null)
                     response.append(line);
@@ -155,53 +167,54 @@ public class Day {
         }
     }
 
-    /** With a HTTP-POST request we can login into the ZPA system. The needed parameters username, password and
-     *  csrfmiddlewaretoken will be read out of the Map logindata */
+    /**
+     * With a HTTP-POST request we can login into the ZPA system. The needed parameters username, password and
+     * csrfmiddlewaretoken will be read out of the Map logindata
+     */
     private void zpaLogin() throws IOException {
 
-        for (int counter = 0; !zpaLoginSuccessful && counter < 10; counter++)
-        {
-        /* Managing the cookies */
-        List<HttpCookie> cookieList = cookieStore.getCookies();
-        String cookiestring = "";
-        for (HttpCookie cookie : cookieList)
-            cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
+        for (int counter = 0; !zpaLoginSuccessful && counter < 10; counter++) {
+            /* Managing the cookies */
+            List<HttpCookie> cookieList = cookieStore.getCookies();
+            String cookiestring = "";
+            for (HttpCookie cookie : cookieList)
+                cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
 
-        /* Preparing the POST request for the login */
-        URL obj = new URL(BASE_URL + LOGIN_URL);
-        HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
-        zpaconnection.setRequestMethod("POST");
-        zpaconnection.setRequestProperty(userAgent, USER_AGENT);
-        zpaconnection.setDoOutput(true);
-        zpaconnection.setRequestProperty(cookie, cookiestring);
+            /* Preparing the POST request for the login */
+            URL obj = new URL(BASE_URL + LOGIN_URL);
+            HttpURLConnection zpaconnection = (HttpURLConnection) obj.openConnection();
+            zpaconnection.setRequestMethod("POST");
+            zpaconnection.setRequestProperty(userAgent, USER_AGENT);
+            zpaconnection.setDoOutput(true);
+            zpaconnection.setRequestProperty(cookie, cookiestring);
 
 
-        String answerFromZPA = "";
-        try (OutputStream toZPA = zpaconnection.getOutputStream()) {
-            String loginstr = "username=" + loginData.get("username") + "&password=" + loginData.get("password");
-            toZPA.write(loginstr.getBytes());
-            try(final BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream()))) {
-                String line;
-                while ((line = fromZPA.readLine()) != null)
-                    answerFromZPA += line;
+            String answerFromZPA = "";
+            try (OutputStream toZPA = zpaconnection.getOutputStream()) {
+                String loginstr = "username=" + loginData.get("username") + "&password=" + loginData.get("password");
+                toZPA.write(loginstr.getBytes());
+                try (final BufferedReader fromZPA = new BufferedReader(new InputStreamReader(zpaconnection.getInputStream()))) {
+                    String line;
+                    while ((line = fromZPA.readLine()) != null)
+                        answerFromZPA += line;
+                }
+                zpaLoginSuccessful = answerFromZPA.contains("error_code\": 0");
             }
-            zpaLoginSuccessful = answerFromZPA.contains("error_code\": 0");
-        }
 
-        final int responseCode = zpaconnection.getResponseCode();
+            final int responseCode = zpaconnection.getResponseCode();
 
-        if (responseCode == HttpURLConnection.HTTP_OK) { // connection successful
-            /* Managing the cookies. This is also where we get the token */
-            String cookiesHeader = zpaconnection.getHeaderField(setCookie);
-            if (cookiesHeader != null && !cookiesHeader.isEmpty()) {
-                cookieList = HttpCookie.parse(cookiesHeader);
-                for (HttpCookie cookie : cookieList)
-                    cookieManager.getCookieStore().add(null, cookie);
+            if (responseCode == HttpURLConnection.HTTP_OK) { // connection successful
+                /* Managing the cookies. This is also where we get the token */
+                String cookiesHeader = zpaconnection.getHeaderField(setCookie);
+                if (cookiesHeader != null && !cookiesHeader.isEmpty()) {
+                    cookieList = HttpCookie.parse(cookiesHeader);
+                    for (HttpCookie cookie : cookieList)
+                        cookieManager.getCookieStore().add(null, cookie);
+                }
+            } else {
+                logger.log(Level.WARNING, "LOGIN request did not work");
             }
-        } else {
-            logger.log(Level.WARNING, "LOGIN request did not work");
         }
-    }
     }
 
 
@@ -266,10 +279,11 @@ public class Day {
             }
         }
     }
+
     private void zpaLogout() throws IOException {
 
         /* Managing the cookies */
-        List <HttpCookie> cookieList = cookieStore.getCookies();
+        List<HttpCookie> cookieList = cookieStore.getCookies();
         String cookiestring = "";
         for (HttpCookie cookie : cookieList)
             cookiestring += cookie.getName() + "=" + cookie.getValue() + ";";
@@ -280,12 +294,12 @@ public class Day {
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty(userAgent, USER_AGENT);
-        con.setRequestProperty(cookie,  cookiestring);
+        con.setRequestProperty(cookie, cookiestring);
         con.setDoOutput(true);
 
         /* Sending the data necessary for the logout */
-        try(OutputStream toZPA = con.getOutputStream()) {
-            final String loginstr = "username="+loginData.get("username")+"&password="+loginData.get("password");
+        try (OutputStream toZPA = con.getOutputStream()) {
+            final String loginstr = "username=" + loginData.get("username") + "&password=" + loginData.get("password");
             toZPA.write(loginstr.getBytes());
             toZPA.flush();
         }
@@ -316,25 +330,21 @@ public class Day {
     }
 
 
-    /** Strings in the list lectures will be adjusted to our needs
-     *  Strings will be cut off at their first blank and the lecture
-     *  "Numerische Mathematik" (now "Numerische") becomes "Numerik" */
+    /**
+     * Strings in the list lectures will be adjusted to our needs
+     * Strings will be cut off at their first blank and the lecture
+     * "Numerische Mathematik" (now "Numerische") becomes "Numerik"
+     */
     private void adjustLectures() {
         final List<String> lecturesUpdated = new ArrayList<>();
-        if(lectures.remove("Numerische Mathematik"))
+        if (lectures.remove("Numerische Mathematik"))
             lecturesUpdated.add("Numerik");
-        for(String lecture: lectures) {
-            if(lecture.contains(" "))
+        for (String lecture : lectures) {
+            if (lecture.contains(" "))
                 lecturesUpdated.add(lecture.substring(0, lecture.indexOf(' ')));
             else
                 lecturesUpdated.add(lecture);
         }
         lectures = lecturesUpdated;
-    }
-    public static void main (String... args) {
-        for (int counter = 1; counter <= 20; counter++) {
-            System.out.println("\nDas ist Versuch " + counter);
-            System.out.println(new Day().getLectures());
-        }
     }
 }
