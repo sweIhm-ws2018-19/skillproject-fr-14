@@ -9,9 +9,12 @@ Zum Formatieren der Seite könnt ihr Markdown verwenden. Hier seht ihr die wicht
 
 Der Alexa Skill "Tasche packen" soll dem Nutzer helfen morgens beim Packen seiner Tasche nichts zu vergessen.
 
-Alexa soll dabei anhand des Stundenplans des Nutzers wissen, was dieser zu den am Tag anstehenden Fächern mitnehmen soll. Der Nutzer kann den Bedarf jedes Fachs individuell anpassen, sowie bei jedem Aufruf angeben, ob er ein bestimmtes Fach heute nicht besuchen will.
+Alexa soll dabei anhand des Stundenplans des Nutzers wissen, was dieser zu den am Tag anstehenden Fächern mitnehmen soll. Der Nutzer kann den Bedarf jedes Fachs individuell anpassen, sowie bei jedem Aufruf angeben, ob er ein bestimmtes Fach heute nicht besuchen will. Der Stundenplan wird dabei aus dem ZPA abgerufen. 
 
-Des Weiteren soll Alexa im Abhängigkeit von Wetterverhältnissen den Nutzer auf das Mitnehmen von Schirm, Sonnenbrille oder ähnlichen Dingen hinweisen.
+Außerdem gibt es eine Hilfe-Funktion, die dem Nutzer alle vorhandenen Funktionen aufzählt. 
+
+![](https://www.deutsche-apotheker-zeitung.de/_Resources/Persistent/b/c/3/4/bc3464752e0d77ef78aa42983fa530ca0bc8cfd3/A082016_S7_Checkliste_824764-3873x1414-1600x584.jpg)
+
 
 ## Skizze des Product Backlog
 
