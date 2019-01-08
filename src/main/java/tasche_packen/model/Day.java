@@ -59,6 +59,7 @@ public class Day {
         if (!(zpaLoginSuccessful && gotWeekplan)) {
             lectures = new ArrayList<>();
 
+            lectures.add("Alternative");
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
             switch (day) {
@@ -100,19 +101,16 @@ public class Day {
         CookieHandler.setDefault(cookieManager);
         cookieStore.removeAll();
 
-        /* Reads the accountdata from the textfile Accountdata.txt */
-        final String filename = "src\\main\\java\\tasche_packen\\Accountdata.txt";
-        try (BufferedReader accountDataReader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = accountDataReader.readLine()) != null) {
-                if (!line.startsWith("//")) {
-                    String loginVariable = line.split("=", 2)[0];
-                    String valueOfVariable = line.split("=", 2)[1];
-                    loginData.put(loginVariable, valueOfVariable);
-                }
-            }
+        //************************************************************/
+        // Please enter your ZPA-Logindata between the quotation marks
+        final String username = "";
+        final String password = "";
 
+        //************************************************************/
+        try {
             lectures = new ArrayList<>();
+            loginData.put("username", username);
+            loginData.put("password", password);
             putCSRFTokenToLoginData();
             zpaLogin();
             if (zpaLoginSuccessful) {
@@ -122,8 +120,10 @@ public class Day {
             }
 
         } catch (IOException e) {
-           logger.log(Level.WARNING, "An IOException was thrown");
+            logger.log(Level.WARNING, "An IOException was thrown");
         }
+
+
     }
 
         /** A HTTP-GET request will be sent to the ZPA-system. The ZPA-system will return a token which will be
@@ -330,5 +330,11 @@ public class Day {
                 lecturesUpdated.add(lecture);
         }
         lectures = lecturesUpdated;
+    }
+    public static void main (String... args) {
+        for (int counter = 1; counter <= 20; counter++) {
+            System.out.println("\nDas ist Versuch " + counter);
+            System.out.println(new Day().getLectures());
+        }
     }
 }
