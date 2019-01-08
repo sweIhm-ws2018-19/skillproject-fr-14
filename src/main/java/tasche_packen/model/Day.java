@@ -67,7 +67,6 @@ public class Day {
         if (!(zpaLoginSuccessful && gotWeekplan)) {
             lectures = new ArrayList<>();
 
-            lectures.add("Alternative");
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             int day = calendar.get(java.util.Calendar.DAY_OF_WEEK);
             switch (day) {
@@ -111,12 +110,12 @@ public class Day {
         CookieHandler.setDefault(cookieManager);
         cookieStore.removeAll();
 
-        //************************************************************/
-        // Please enter your ZPA-Logindata between the quotation marks
+        //**************************************************************/
+        /* Please enter your ZPA-Logindata between the quotation marks */
         final String username = "";
         final String password = "";
 
-        //************************************************************/
+        //**************************************************************/
         try {
             lectures = new ArrayList<>();
             loginData.put("username", username);
