@@ -17,14 +17,14 @@ Außerdem gibt es eine Hilfe-Funktion, die dem Nutzer alle vorhandenen Funktione
 
 
 ## Skizze des Product Backlog
-![](https://github.com/sweIhm-ws2018-19/skillproject-fr-14/blob/master/InkedInkedproduct_backlog_LI.jpg)
+![](https://raw.githubusercontent.com/sweIhm-ws2018-19/skillproject-fr-14/master/InkedInkedproduct_backlog_LI.jpg)
 
 
 
 ## UML-Diagramme (Analyseklassenmodell) 
 ### Aktivitätsdiagramm
 
-![Aktivitätsdiagramm](https://github.com/sweIhm-ws2018-19/skillproject-fr-14/blob/master/Sprint2%20UML/Aktivit%C3%A4tsdiagramm_TaschePacken%20(1).png)
+![Aktivitätsdiagramm](https://raw.githubusercontent.com/sweIhm-ws2018-19/skillproject-fr-14/master/Sprint2%20UML/Aktivit%C3%A4tsdiagramm_TaschePacken%20(1).png)
 
 ### Fachklassenmodell
 
