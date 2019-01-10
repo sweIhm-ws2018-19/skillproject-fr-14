@@ -27,6 +27,11 @@ Außerdem gibt es eine Hilfe-Funktion, die dem Nutzer alle vorhandenen Funktione
 ![Aktivitätsdiagramm](https://raw.githubusercontent.com/sweIhm-ws2018-19/skillproject-fr-14/master/Sprint2%20UML/Aktivit%C3%A4tsdiagramm_TaschePacken%20(1).png)
 
 ### Fachklassenmodell
+![](https://raw.githubusercontent.com/sweIhm-ws2018-19/skillproject-fr-14/master/Sprint3%20UML/FachklassenmodellBusinessLogik.png)
 
-## eine Ihrer User Stories und ihre Umsetzung
-(wählen Sie hier ein "Highlight" aus)
+![](https://raw.githubusercontent.com/sweIhm-ws2018-19/skillproject-fr-14/master/Sprint3%20UML/Fachklassendiagramm.png)
+
+##  User Story
+### ZPA - Anbindung
+Stundenplan wird aus dem ZPA geholt, um Fächer des Tage auszulesen und davon abhängig die mitzunehmenden Gegenstände auszugeben
+
