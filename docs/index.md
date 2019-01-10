@@ -1,7 +1,4 @@
 # Tasche packen
-Zum Formatieren der Seite könnt ihr Markdown verwenden. Hier seht ihr die wichtigsten Befehle. 
-[https://help.github.com/articles/basic-writing-and-formatting-syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax)
-
 
 
 
